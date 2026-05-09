@@ -1004,6 +1004,62 @@
         max-height:50dvh;
       }
     }
+
+    .paymentStatusRow,
+    .vehiclePriceRow{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:clamp(7px, 2vw, 12px);
+      align-items:start;
+      margin-bottom:clamp(7px, 2vw, 12px);
+    }
+    .paymentStatusRow .field,
+    .vehiclePriceRow .field{
+      margin-bottom:0;
+    }
+    .paymentField label,
+    .statusField label,
+    .carField label,
+    .pricePaymentField label{
+      display:block;
+      font-size:12px;
+      margin-bottom:5px;
+    }
+    .paymentField .paymentButtons,
+    .statusField .statusButtons{
+      margin-top:0;
+    }
+    .vehiclePriceRow{
+      grid-template-columns:minmax(0, 1.25fr) minmax(118px, .75fr);
+    }
+    .vehiclePriceRow input{
+      min-height:clamp(42px, 11vw, 50px);
+    }
+    .selectedField{
+      margin-top:clamp(6px, 1.5vw, 10px);
+    }
+
+    @media(max-width:640px){
+      .paymentStatusRow{
+        grid-template-columns:1fr;
+      }
+      .vehiclePriceRow{
+        grid-template-columns:minmax(0, 1.12fr) minmax(112px, .88fr);
+      }
+      .paymentField label,
+      .statusField label,
+      .carField label,
+      .pricePaymentField label{
+        display:block;
+        font-size:11px;
+      }
+    }
+
+    @media(max-width:360px){
+      .vehiclePriceRow{
+        grid-template-columns:1fr;
+      }
+    }
   
   </style>
   <link rel="manifest" href="manifest.webmanifest">
@@ -1038,9 +1094,23 @@
               <div class="quickClients" id="quickClients"></div>
             </div>
 
-            <div class="field carField">
-              <label>Автомобиль</label>
-              <input id="car" type="text" placeholder="Автомобиль" autocomplete="off" />
+            <div class="paymentStatusRow">
+              <div class="field paymentField">
+                <label>Вид оплаты</label>
+                <div class="paymentButtons" id="paymentButtons">
+                  <button type="button" class="paymentBtn active" data-payment="наличные">Наличные</button>
+                  <button type="button" class="paymentBtn" data-payment="перевод">Перевод</button>
+                  <button type="button" class="paymentBtn" data-payment="счет">Счёт</button>
+                </div>
+              </div>
+
+              <div class="field statusField">
+                <label>Статус</label>
+                <div class="statusButtons" id="statusChips">
+                  <button type="button" class="statusBtn active" data-status="оплачено">Оплачено</button>
+                  <button type="button" class="statusBtn" data-status="не оплачено">Долг</button>
+                </div>
+              </div>
             </div>
 
             <div class="field">
@@ -1103,21 +1173,15 @@
               <div class="selectedBox" id="selectedElementsBox"></div>
             </div>
 
-            <div class="field pricePaymentField">
-              <label>Стоимость</label>
-              <input id="price" type="number" inputmode="numeric" min="0" step="1" placeholder="0" required />
-              <div class="paymentButtons" id="paymentButtons">
-                <button type="button" class="paymentBtn active" data-payment="наличные">Наличные</button>
-                <button type="button" class="paymentBtn" data-payment="перевод">Перевод</button>
-                <button type="button" class="paymentBtn" data-payment="счет">Счёт</button>
+            <div class="vehiclePriceRow">
+              <div class="field carField">
+                <label>Автомобиль</label>
+                <input id="car" type="text" placeholder="Автомобиль" autocomplete="off" />
               </div>
-            </div>
 
-            <div class="field statusField">
-              <label>Статус</label>
-              <div class="statusButtons" id="statusChips">
-                <button type="button" class="statusBtn active" data-status="оплачено">Оплачено</button>
-                <button type="button" class="statusBtn" data-status="не оплачено">Долг</button>
+              <div class="field pricePaymentField">
+                <label>Стоимость</label>
+                <input id="price" type="number" inputmode="numeric" min="0" step="1" placeholder="0" required />
               </div>
             </div>
 
