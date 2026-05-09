@@ -309,6 +309,42 @@
 
 
 
+
+    .carField{margin-bottom:4px}
+    .carField label,.pricePaymentField label,.statusField label{font-size:11px;margin-bottom:2px}
+    .carField input{
+      min-height:34px;
+      padding:6px 8px;
+      font-size:14px;
+    }
+    .pricePaymentField input{
+      min-height:36px;
+      padding:7px 9px;
+      font-size:15px;
+    }
+    .pricePaymentField{margin-bottom:4px}
+    .statusField{margin-bottom:4px}
+    .paymentButtons,.statusButtons{
+      gap:4px;
+      margin-top:4px;
+    }
+    .paymentBtn,.statusBtn{
+      min-height:34px;
+      padding:6px 4px;
+      font-size:12px;
+      border-radius:10px;
+    }
+    .btn.primary{
+      min-height:38px;
+      padding:8px;
+      font-size:15px;
+      border-radius:11px;
+    }
+    .stickySave{
+      margin-top:2px;
+      bottom:4px;
+    }
+
     .dateClientRow{grid-template-columns:.72fr 1.28fr}
     .dateField input{
       padding-left:7px;
@@ -445,25 +481,65 @@
         padding:6px 8px;
         font-size:12px;
       }
+
+      .carField{margin-bottom:3px}
+      .carField label,.pricePaymentField label,.statusField label{
+        display:none;
+      }
+      .carField input{
+        min-height:32px;
+        padding:6px 8px;
+        font-size:14px;
+        border-radius:10px;
+      }
+      .pricePaymentField input{
+        min-height:34px;
+        padding:6px 8px;
+        font-size:15px;
+        border-radius:10px;
+      }
+      .pricePaymentField,.statusField{
+        margin-bottom:3px;
+      }
       .paymentButtons,.statusButtons{
-        gap:5px;
+        gap:4px;
+        margin-top:4px;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:32px;
+        padding:5px 3px;
+        font-size:12px;
+        border-radius:9px;
+      }
+      .btn.primary{
+        min-height:38px;
+        padding:7px;
+        font-size:15px;
+        border-radius:10px;
+      }
+      .stickySave{
+        bottom:3px;
+        margin-top:2px;
+      }
+      .paymentButtons,.statusButtons{
+        gap:4px;
         margin-top:5px;
       }
       .paymentBtn,.statusBtn{
-        min-height:38px;
-        padding:8px 4px;
-        font-size:13px;
-        border-radius:11px;
+        min-height:32px;
+        padding:5px 3px;
+        font-size:12px;
+        border-radius:9px;
       }
       .btn.primary{
-        min-height:44px;
-        font-size:16px;
-        border-radius:13px;
-        padding:10px;
+        min-height:38px;
+        font-size:15px;
+        border-radius:10px;
+        padding:7px;
       }
       .stickySave{
-        bottom:5px;
-        margin-top:4px;
+        bottom:3px;
+        margin-top:2px;
       }
 
       .wrap{margin-bottom:20px}
@@ -534,25 +610,65 @@
         padding:6px 8px;
         font-size:12px;
       }
+
+      .carField{margin-bottom:3px}
+      .carField label,.pricePaymentField label,.statusField label{
+        display:none;
+      }
+      .carField input{
+        min-height:32px;
+        padding:6px 8px;
+        font-size:14px;
+        border-radius:10px;
+      }
+      .pricePaymentField input{
+        min-height:34px;
+        padding:6px 8px;
+        font-size:15px;
+        border-radius:10px;
+      }
+      .pricePaymentField,.statusField{
+        margin-bottom:3px;
+      }
       .paymentButtons,.statusButtons{
-        gap:5px;
+        gap:4px;
+        margin-top:4px;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:32px;
+        padding:5px 3px;
+        font-size:12px;
+        border-radius:9px;
+      }
+      .btn.primary{
+        min-height:38px;
+        padding:7px;
+        font-size:15px;
+        border-radius:10px;
+      }
+      .stickySave{
+        bottom:3px;
+        margin-top:2px;
+      }
+      .paymentButtons,.statusButtons{
+        gap:4px;
         margin-top:5px;
       }
       .paymentBtn,.statusBtn{
-        min-height:38px;
-        padding:8px 4px;
-        font-size:13px;
-        border-radius:11px;
+        min-height:32px;
+        padding:5px 3px;
+        font-size:12px;
+        border-radius:9px;
       }
       .btn.primary{
-        min-height:44px;
-        font-size:16px;
-        border-radius:13px;
-        padding:10px;
+        min-height:38px;
+        font-size:15px;
+        border-radius:10px;
+        padding:7px;
       }
       .stickySave{
-        bottom:5px;
-        margin-top:4px;
+        bottom:3px;
+        margin-top:2px;
       }
 
       .wrap{margin-bottom:40px}
@@ -725,9 +841,9 @@
               </div>
             </div>
 
-            <div class="field">
+            <div class="field carField">
               <label>Автомобиль</label>
-              <input id="car" type="text" placeholder="Например: BMW X5" autocomplete="off" />
+              <input id="car" type="text" placeholder="Авто" autocomplete="off" />
             </div>
 
             <div class="field">
@@ -790,26 +906,26 @@
               <div class="selectedBox" id="selectedElementsBox"></div>
             </div>
 
-            <div class="field">
+            <div class="field pricePaymentField">
               <label>Стоимость</label>
               <input id="price" type="number" inputmode="numeric" min="0" step="1" placeholder="0" required />
               <div class="paymentButtons" id="paymentButtons">
-                <button type="button" class="paymentBtn active" data-payment="наличные">Наличные</button>
+                <button type="button" class="paymentBtn active" data-payment="наличные">Нал.</button>
                 <button type="button" class="paymentBtn" data-payment="перевод">Перевод</button>
                 <button type="button" class="paymentBtn" data-payment="счет">Счёт</button>
               </div>
             </div>
 
-            <div class="field">
-              <label>Статус оплаты</label>
+            <div class="field statusField">
+              <label>Статус</label>
               <div class="statusButtons" id="statusChips">
                 <button type="button" class="statusBtn active" data-status="оплачено">Оплачено</button>
-                <button type="button" class="statusBtn" data-status="не оплачено">Не оплачено</button>
+                <button type="button" class="statusBtn" data-status="не оплачено">Долг</button>
               </div>
             </div>
 
             <div class="stickySave">
-              <button class="btn primary" type="submit">Сохранить доход</button>
+              <button class="btn primary" type="submit">Сохранить</button>
             </div>
           </form>
         </div>
@@ -827,7 +943,7 @@
             <div class="num good" id="monthPaid">0 ₽</div>
           </div>
           <div class="stat">
-            <div class="name">Не оплачено</div>
+            <div class="name">Долг</div>
             <div class="num bad" id="totalDebt">0 ₽</div>
           </div>
           <div class="stat">
@@ -853,7 +969,7 @@
           <select id="statusFilter" style="max-width:190px">
             <option value="">Все статусы</option>
             <option value="оплачено">Оплачено</option>
-            <option value="не оплачено">Не оплачено</option>
+            <option value="не оплачено">Долг</option>
           </select>
           <button class="btn small danger" id="clearAllBtn">Очистить</button>
         </div>
