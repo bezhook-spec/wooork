@@ -28,7 +28,7 @@
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
       background:radial-gradient(circle at top right,rgba(80,200,120,.18),transparent 32%),var(--bg);
       color:var(--text);
-      padding:10px;
+      padding:7px;
       -webkit-tap-highlight-color:transparent;
     }
     .wrap{max-width:1060px;margin:0 auto 90px}
@@ -47,19 +47,19 @@
       gap:8px;
       background:rgba(23,32,28,.72);
       border:1px solid var(--line);
-      padding:6px;
+      padding:4px;
       border-radius:999px;
       position:sticky;
       top:10px;
       z-index:5;
       backdrop-filter:blur(12px);
-      margin-bottom:14px;
+      margin-bottom:6px;
     }
     .tab{
       flex:1;
       border:0;
       border-radius:999px;
-      padding:11px 12px;
+      padding:8px 8px;
       color:var(--muted);
       background:transparent;
       font-weight:800;
@@ -71,10 +71,10 @@
       background:linear-gradient(180deg,rgba(29,40,35,.94),rgba(23,32,28,.94));
       border:1px solid var(--line);
       border-radius:var(--radius);
-      padding:16px;
+      padding:8px;
       box-shadow:var(--shadow);
     }
-    label{display:block;color:var(--muted);font-size:13px;margin:0 0 7px}
+    label{display:block;color:var(--muted);font-size:12px;margin:0 0 4px}
     input,select,button,textarea{font:inherit}
     input,select{
       width:100%;
@@ -82,23 +82,23 @@
       background:var(--input);
       color:var(--text);
       border-radius:14px;
-      padding:14px 13px;
+      padding:9px 10px;
       outline:none;
-      min-height:48px;
+      min-height:40px;
     }
     input:focus,select:focus{border-color:rgba(80,200,120,.8)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .field{margin-bottom:12px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+    .field{margin-bottom:6px}
     .btn{
       border:0;
       border-radius:14px;
-      padding:13px 14px;
+      padding:9px 10px;
       font-weight:850;
       cursor:pointer;
       background:var(--card2);
       color:var(--text);
       border:1px solid var(--line);
-      min-height:44px;
+      min-height:38px;
     }
     .btn.primary{
       background:linear-gradient(180deg,var(--green2),var(--green));
@@ -106,23 +106,23 @@
       border:0;
       width:100%;
       font-size:17px;
-      padding:16px;
+      padding:8px;
       min-height:56px;
     }
     .btn.danger{border-color:rgba(255,107,107,.5);color:#ffd0d0}
     .btn.small{padding:9px 11px;font-size:13px;border-radius:12px;min-height:38px}
-    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chips{display:flex;gap:5px;flex-wrap:wrap}
     .chip{
       border:1px solid var(--line);
       background:var(--input);
       color:var(--muted);
       border-radius:999px;
-      padding:10px 12px;
+      padding:7px 9px;
       cursor:pointer;
       user-select:none;
       font-weight:750;
       font-size:14px;
-      min-height:42px;
+      min-height:34px;
     }
     .chip.active{
       background:rgba(80,200,120,.16);
@@ -132,8 +132,8 @@
     .paymentButtons,.statusButtons{
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:8px;
-      margin-top:8px;
+      gap:5px;
+      margin-top:5px;
     }
     .statusButtons{grid-template-columns:1fr 1fr}
     .paymentBtn,.statusBtn{
@@ -141,12 +141,12 @@
       background:var(--input);
       color:var(--muted);
       border-radius:14px;
-      padding:14px 8px;
+      padding:9px 6px;
       cursor:pointer;
       user-select:none;
       font-weight:900;
       font-size:14px;
-      min-height:50px;
+      min-height:40px;
     }
     .paymentBtn.active,.statusBtn.active{
       background:rgba(80,200,120,.16);
@@ -157,7 +157,7 @@
       border:1px solid var(--line);
       background:rgba(16,23,20,.72);
       border-radius:15px;
-      padding:10px;
+      padding:7px;
       min-height:48px;
     }
     .selectedBox .none{color:var(--muted);font-size:14px}
@@ -168,7 +168,7 @@
       background:rgba(16,23,20,.72);
       border:1px solid var(--line);
       border-radius:16px;
-      padding:14px;
+      padding:9px;
     }
     .stat .name{color:var(--muted);font-size:13px}
     .stat .num{font-size:24px;font-weight:900;margin-top:4px;letter-spacing:-.03em}
@@ -208,13 +208,13 @@
         radial-gradient(circle at 50% 18%, rgba(80,200,120,.10), transparent 30%),
         rgba(16,23,20,.74);
       border-radius:18px;
-      padding:12px;
+      padding:7px;
       overflow:hidden;
     }
     .carTop{
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      gap:6px;
       align-items:center;
       margin-bottom:8px;
     }
@@ -295,12 +295,12 @@
     .clientStatLine{
       display:grid;
       grid-template-columns:1fr auto auto;
-      gap:10px;
+      gap:6px;
       align-items:center;
       background:rgba(16,23,20,.72);
       border:1px solid var(--line);
       border-radius:14px;
-      padding:10px;
+      padding:7px;
       color:var(--muted);
       font-size:14px;
     }
@@ -312,13 +312,13 @@
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:8px;
-      margin-bottom:10px;
+      margin-bottom:6px;
     }
     .summaryBox{
       background:rgba(16,23,20,.72);
       border:1px solid var(--line);
       border-radius:14px;
-      padding:10px;
+      padding:7px;
     }
     .summaryBox .name{color:var(--muted);font-size:12px}
     .summaryBox .value{font-size:18px;font-weight:950;margin-top:2px}
@@ -326,7 +326,7 @@
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:8px;
-      margin-bottom:10px;
+      margin-bottom:6px;
     }
     .btn.print{
       background:rgba(80,200,120,.16);
@@ -344,14 +344,14 @@
       border:1px solid var(--line);
       background:rgba(16,23,20,.72);
       border-radius:16px;
-      padding:12px;
-      margin-bottom:10px;
+      padding:7px;
+      margin-bottom:6px;
     }
     .recordTop{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:10px;
+      gap:6px;
       margin-bottom:8px;
     }
     .recordTitle{font-weight:900}
@@ -367,12 +367,154 @@
     }
 
     @media(max-width:760px){
-      body{padding:10px}
+      body{padding:5px}
+      .wrap{margin-bottom:20px}
+      .tabs{
+        top:4px;
+        margin-bottom:5px;
+      }
+      .tab{
+        padding:8px 4px;
+        font-size:12px;
+      }
+      .card{
+        padding:7px;
+        border-radius:13px;
+      }
+      .grid{gap:6px}
+      .field{margin-bottom:5px}
+      label{font-size:11px;margin-bottom:3px}
+      input,select{
+        min-height:38px;
+        padding:8px 9px;
+        border-radius:11px;
+        font-size:15px;
+      }
+      .quickClients{
+        gap:4px;
+        margin-top:5px;
+      }
+      .quickClientBtn{
+        min-height:30px;
+        padding:6px 6px;
+        font-size:11px;
+        border-radius:999px;
+      }
+      .carPanel{
+        padding:5px;
+        border-radius:12px;
+      }
+      .carSvgWrap{padding:0}
+      svg.car{
+        max-height:44vh;
+      }
+      .selectedBox{
+        min-height:30px;
+        padding:5px;
+        border-radius:11px;
+      }
+      .chip{
+        min-height:30px;
+        padding:6px 8px;
+        font-size:12px;
+      }
+      .paymentButtons,.statusButtons{
+        gap:5px;
+        margin-top:5px;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:38px;
+        padding:8px 4px;
+        font-size:13px;
+        border-radius:11px;
+      }
+      .btn.primary{
+        min-height:44px;
+        font-size:16px;
+        border-radius:13px;
+        padding:10px;
+      }
+      .stickySave{
+        bottom:5px;
+        margin-top:4px;
+      }
+
+      .wrap{margin-bottom:20px}
+      .tabs{
+        top:4px;
+        margin-bottom:5px;
+      }
+      .tab{
+        padding:8px 4px;
+        font-size:12px;
+      }
+      .card{
+        padding:7px;
+        border-radius:13px;
+      }
+      .grid{gap:6px}
+      .field{margin-bottom:5px}
+      label{font-size:11px;margin-bottom:3px}
+      input,select{
+        min-height:38px;
+        padding:8px 9px;
+        border-radius:11px;
+        font-size:15px;
+      }
+      .quickClients{
+        gap:4px;
+        margin-top:5px;
+      }
+      .quickClientBtn{
+        min-height:30px;
+        padding:6px 6px;
+        font-size:11px;
+        border-radius:999px;
+      }
+      .carPanel{
+        padding:5px;
+        border-radius:12px;
+      }
+      .carSvgWrap{padding:0}
+      svg.car{
+        max-height:44vh;
+      }
+      .selectedBox{
+        min-height:30px;
+        padding:5px;
+        border-radius:11px;
+      }
+      .chip{
+        min-height:30px;
+        padding:6px 8px;
+        font-size:12px;
+      }
+      .paymentButtons,.statusButtons{
+        gap:5px;
+        margin-top:5px;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:38px;
+        padding:8px 4px;
+        font-size:13px;
+        border-radius:11px;
+      }
+      .btn.primary{
+        min-height:44px;
+        font-size:16px;
+        border-radius:13px;
+        padding:10px;
+      }
+      .stickySave{
+        bottom:5px;
+        margin-top:4px;
+      }
+
       .wrap{margin-bottom:40px}
       header{
         display:flex;
         align-items:center;
-        margin-bottom:10px;
+        margin-bottom:6px;
       }
       h1{font-size:21px}
       .sub{font-size:12px;line-height:1.25}
@@ -391,7 +533,7 @@
       .grid,.row,.stats,.listEditor{grid-template-columns:1fr}
       .grid{gap:10px}
       .card{
-        padding:12px;
+        padding:7px;
         border-radius:16px;
       }
       .desktopStats{order:-1}
@@ -406,7 +548,7 @@
         grid-column:1 / -1;
       }
       .stat{
-        padding:10px;
+        padding:7px;
         border-radius:14px;
       }
       .stat .name{font-size:12px}
@@ -415,7 +557,7 @@
       label{font-size:12px;margin-bottom:5px}
       input,select{
         min-height:46px;
-        padding:12px;
+        padding:7px;
         border-radius:13px;
         font-size:16px;
       }
