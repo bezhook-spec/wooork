@@ -1233,6 +1233,18 @@
       --radius:16px;
       --controlRadius:13px;
       --focus:0 0 0 3px rgba(80,200,120,.16);
+      --pay-cash:#50c878;
+      --pay-cash-soft:rgba(80,200,120,.16);
+      --pay-cash-border:rgba(80,200,120,.45);
+      --pay-cash-text:#8be8a7;
+      --pay-transfer:#4ea1ff;
+      --pay-transfer-soft:rgba(78,161,255,.16);
+      --pay-transfer-border:rgba(78,161,255,.45);
+      --pay-transfer-text:#9dcaff;
+      --pay-invoice:#ffd34d;
+      --pay-invoice-soft:rgba(255,211,77,.15);
+      --pay-invoice-border:rgba(255,211,77,.42);
+      --pay-invoice-text:#ffe695;
     }
     body{
       background:
@@ -1279,6 +1291,28 @@
       border-color:rgba(166,194,176,.14);
       background:linear-gradient(180deg,rgba(24,35,30,.94),rgba(16,23,20,.94));
       box-shadow:0 12px 28px rgba(0,0,0,.24);
+    }
+    .paymentRow{
+      grid-template-columns:minmax(80px,1fr) auto;
+      gap:7px 8px;
+      align-items:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .paymentLabel{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .paymentValue{
+      text-align:right;
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;
+    }
+    .paymentBar{
+      grid-column:1 / -1;
+      width:100%;
     }
     .card{
       border-radius:var(--radius);
@@ -1346,12 +1380,26 @@
     .btn.pay,
     .periodBtn.active,
     .quickClientBtn.active,
-    .paymentBtn.active,
     .statusBtn.active,
     .chip.active{
       background:rgba(80,200,120,.16);
       border-color:rgba(80,200,120,.58);
       color:var(--green2);
+    }
+    .paymentBtn.active[data-payment="наличные"]{
+      background:var(--pay-cash-soft);
+      border-color:var(--pay-cash-border);
+      color:var(--pay-cash-text);
+    }
+    .paymentBtn.active[data-payment="перевод"]{
+      background:var(--pay-transfer-soft);
+      border-color:var(--pay-transfer-border);
+      color:var(--pay-transfer-text);
+    }
+    .paymentBtn.active[data-payment="счет"]{
+      background:var(--pay-invoice-soft);
+      border-color:var(--pay-invoice-border);
+      color:var(--pay-invoice-text);
     }
     .btn.pay{
       background:rgba(241,196,83,.13);
@@ -1446,6 +1494,30 @@
       border-color:rgba(241,196,83,.25);
       color:var(--yellow);
     }
+    .paymentBadge.cash,
+    .paymentValue.cash{
+      background:var(--pay-cash-soft);
+      border-color:var(--pay-cash-border);
+      color:var(--pay-cash-text);
+    }
+    .paymentBadge.transfer,
+    .paymentValue.transfer{
+      background:var(--pay-transfer-soft);
+      border-color:var(--pay-transfer-border);
+      color:var(--pay-transfer-text);
+    }
+    .paymentBadge.invoice,
+    .paymentValue.invoice{
+      background:var(--pay-invoice-soft);
+      border-color:var(--pay-invoice-border);
+      color:var(--pay-invoice-text);
+    }
+    .paymentValue.cash,
+    .paymentValue.transfer,
+    .paymentValue.invoice{
+      background:transparent;
+      border-color:transparent;
+    }
     .barTrack{
       background:rgba(255,255,255,.065);
       height:11px;
@@ -1456,6 +1528,9 @@
     .barFill.unpaid{
       background:linear-gradient(90deg,var(--yellow),#f7d77d);
     }
+    .barFill.cash{background:linear-gradient(90deg,var(--pay-cash),var(--pay-cash-text))}
+    .barFill.transfer{background:linear-gradient(90deg,var(--pay-transfer),var(--pay-transfer-text))}
+    .barFill.invoice{background:linear-gradient(90deg,var(--pay-invoice),var(--pay-invoice-text))}
     .statsEmpty,
     .empty{
       background:rgba(12,18,16,.42);
@@ -1507,6 +1582,21 @@
       .btn.primary{
         min-height:48px;
       }
+    }
+    .paymentBreakdown .paymentRow{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) max-content !important;
+      align-items:center;
+    }
+    .paymentBreakdown .paymentLabel{
+      justify-self:start;
+    }
+    .paymentBreakdown .paymentValue{
+      justify-self:end;
+      text-align:right;
+    }
+    .paymentBreakdown .paymentBar{
+      grid-column:1 / -1;
     }
   
   </style>
@@ -1857,6 +1947,13 @@
     }[ch]));
   }
 
+  function paymentClass(method){
+    if(method === "наличные") return "cash";
+    if(method === "перевод") return "transfer";
+    if(method === "счет" || method === "счёт") return "invoice";
+    return "";
+  }
+
   function topClients(limit = 5){
     const score = new Map();
 
@@ -2081,9 +2178,9 @@
 
   function renderPaymentStats(rows, targetId){
     const labels = [
-      {key:"наличные", label:"Наличные"},
-      {key:"перевод", label:"Перевод"},
-      {key:"счет", label:"Счёт"}
+      {key:"наличные", label:"Наличные", cls:"cash"},
+      {key:"перевод", label:"Перевод", cls:"transfer"},
+      {key:"счет", label:"Счёт", cls:"invoice"}
     ];
     const totals = new Map(labels.map(item => [item.key, 0]));
     rows.filter(r => r.status === "оплачено").forEach(r => {
@@ -2096,9 +2193,9 @@
       const pct = max ? Math.round(sum / max * 100) : 0;
       return `
         <div class="paymentRow">
-          <div>${item.label}</div>
-          <div class="paymentValue">${money(sum)}</div>
-          <div class="barTrack"><div class="barFill ${sum ? "" : "empty"}" style="width:${pct}%"></div></div>
+          <div class="paymentLabel">${item.label}</div>
+          <div class="paymentValue ${item.cls}">${money(sum)}</div>
+          <div class="barTrack paymentBar"><div class="barFill ${sum ? item.cls : "empty"}" style="width:${pct}%"></div></div>
         </div>
       `;
     }).join("");
@@ -2227,7 +2324,7 @@
         <td>${escapeHtml(r.car || "")}</td>
         <td>${escapeHtml((r.elements || []).join(", "))}</td>
         <td><b>${money(r.price)}</b></td>
-        <td>${escapeHtml(r.paymentMethod || "")}</td>
+        <td><span class="badge paymentBadge ${paymentClass(r.paymentMethod)}">${escapeHtml(r.paymentMethod || "")}</span></td>
         <td><span class="badge ${r.status === "оплачено" ? "paid" : "unpaid"}">${escapeHtml(r.status || "")}</span></td>
         <td><button class="btn small danger" data-del-record="${r.id}">Удалить</button></td>
       </tr>
@@ -2243,7 +2340,7 @@
           <div class="recordPrice">${money(r.price)}</div>
         </div>
         <span class="badge ${r.status === "оплачено" ? "paid" : "unpaid"}">${escapeHtml(r.status || "")}</span>
-        <span class="badge" style="background:rgba(255,255,255,.06);color:var(--muted);margin-left:5px">${escapeHtml(r.paymentMethod || "")}</span>
+        <span class="badge paymentBadge ${paymentClass(r.paymentMethod)}" style="margin-left:5px">${escapeHtml(r.paymentMethod || "")}</span>
         <div class="recordLine"><b>Элементы:</b> ${escapeHtml((r.elements || []).join(", "))}</div>
         <div style="margin-top:10px">
           <button class="btn small danger" data-del-record="${r.id}">Удалить</button>
