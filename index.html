@@ -808,6 +808,53 @@
       .quickClientBtn{font-size:12px;padding-left:7px;padding-right:7px}
       .labelSvg{font-size:12px}
     }
+  
+    .statusField{
+      margin-bottom:2px;
+    }
+    .statusButtons{
+      gap:3px;
+      margin-top:3px;
+    }
+    .statusBtn{
+      min-height:26px !important;
+      padding:3px 3px !important;
+      font-size:11px !important;
+      border-radius:8px !important;
+    }
+    .btn.primary{
+      min-height:32px !important;
+      padding:5px !important;
+      font-size:14px !important;
+      border-radius:9px !important;
+    }
+    .stickySave{
+      margin-top:1px !important;
+      bottom:2px !important;
+    }
+    @media(max-width:760px){
+      .statusButtons{
+        gap:3px;
+        margin-top:3px;
+      }
+      .statusBtn{
+        min-height:25px !important;
+        padding:3px 3px !important;
+        font-size:11px !important;
+        border-radius:8px !important;
+      }
+      .btn.primary{
+        min-height:31px !important;
+        padding:4px !important;
+        font-size:14px !important;
+        border-radius:8px !important;
+      }
+      .stickySave{
+        margin-top:1px !important;
+        bottom:2px !important;
+      }
+    }
+
   </style>
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0f1412">
@@ -1553,7 +1600,54 @@
   .money{text-align:right;white-space:nowrap}
   .total{margin-top:12px;text-align:right;font-size:15px;font-weight:bold}
   .footer{margin-top:18px;color:#777;font-size:10px}
-</style>
+
+    .statusField{
+      margin-bottom:2px;
+    }
+    .statusButtons{
+      gap:3px;
+      margin-top:3px;
+    }
+    .statusBtn{
+      min-height:26px !important;
+      padding:3px 3px !important;
+      font-size:11px !important;
+      border-radius:8px !important;
+    }
+    .btn.primary{
+      min-height:32px !important;
+      padding:5px !important;
+      font-size:14px !important;
+      border-radius:9px !important;
+    }
+    .stickySave{
+      margin-top:1px !important;
+      bottom:2px !important;
+    }
+    @media(max-width:760px){
+      .statusButtons{
+        gap:3px;
+        margin-top:3px;
+      }
+      .statusBtn{
+        min-height:25px !important;
+        padding:3px 3px !important;
+        font-size:11px !important;
+        border-radius:8px !important;
+      }
+      .btn.primary{
+        min-height:31px !important;
+        padding:4px !important;
+        font-size:14px !important;
+        border-radius:8px !important;
+      }
+      .stickySave{
+        margin-top:1px !important;
+        bottom:2px !important;
+      }
+    }
+
+  </style>
 </head>
 <body>
   <h1>${escapeHtml(period.title)}</h1>

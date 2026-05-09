@@ -1,4 +1,4 @@
-const CACHE_NAME = "pdr-income-v5-super-compact";
+const CACHE_NAME = "pdr-income-v6-status-save-tiny";
 const FILES = [
   "./",
   "./index.html",
