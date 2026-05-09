@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Доходы PDR — мобильная версия</title>
+  <title>Доходы PDR polished</title>
   <style>
     :root{
       --bg:#0f1412;
@@ -809,49 +809,242 @@
       .labelSvg{font-size:12px}
     }
   
-    .statusField{
+    /* polished compact layout */
+    body{
+      background:
+        radial-gradient(circle at 85% 0%, rgba(80,200,120,.22), transparent 30%),
+        linear-gradient(180deg, #0b100e 0%, #111814 52%, #0d1210 100%);
+    }
+    .tabs{
+      border:1px solid rgba(80,200,120,.18);
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+    .tab{
+      letter-spacing:.01em;
+    }
+    .tab.active{
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,.28), 0 6px 14px rgba(80,200,120,.18);
+    }
+    .card{
+      border-color:rgba(80,200,120,.13);
+      background:
+        linear-gradient(180deg, rgba(31,43,37,.96), rgba(18,26,22,.96));
+      box-shadow:0 14px 34px rgba(0,0,0,.32);
+    }
+    input,select{
+      border-color:rgba(122,146,132,.23);
+      background:rgba(8,12,10,.74);
+    }
+    .topInputGrid{
+      display:grid;
+      grid-template-columns:.72fr 1.28fr;
+      gap:6px;
+      margin-bottom:5px;
+    }
+    .topInputGrid .field{
+      margin-bottom:0;
+    }
+    .quickClients{
+      grid-column:1 / -1;
+      margin-top:0;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:5px;
+    }
+    .quickClientBtn{
+      min-width:0;
+      max-width:none;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      min-height:31px;
+      padding:6px 7px;
+      border-radius:12px;
+      background:rgba(255,255,255,.035);
+      border-color:rgba(122,146,132,.22);
+    }
+    .quickClientBtn.active{
+      background:rgba(80,200,120,.18);
+      color:#9ff0b8;
+      border-color:rgba(80,200,120,.72);
+    }
+    .dateField label,.clientField label{
+      font-size:10px;
       margin-bottom:2px;
+      opacity:.8;
+    }
+    .dateField input,.clientField select{
+      min-height:36px;
+      padding:6px 8px;
+      border-radius:11px;
+      font-size:13px;
+    }
+    .clientField select{
+      font-size:14px;
+    }
+    .carField{
+      margin-bottom:5px;
+    }
+    .carField label{
+      display:none;
+    }
+    .carField input{
+      min-height:36px;
+      padding:7px 9px;
+      border-radius:11px;
+      font-size:15px;
+    }
+    .carPanel{
+      border-color:rgba(80,200,120,.14);
+      background:
+        radial-gradient(circle at 50% 15%, rgba(80,200,120,.12), transparent 32%),
+        linear-gradient(180deg, rgba(11,17,14,.92), rgba(15,22,19,.92));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    .part{
+      fill:#19251f;
+      stroke:rgba(190,213,199,.42);
+    }
+    .part.selected{
+      fill:rgba(80,200,120,.78);
+      stroke:#e4ffeb;
+      filter: drop-shadow(0 0 9px rgba(80,200,120,.48));
+    }
+    .labelSvg{
+      fill:#f4fff7;
+      opacity:.96;
+      font-weight:900;
+    }
+    .selectedBox{
+      border-color:rgba(80,200,120,.16);
+      background:rgba(8,12,10,.54);
+      min-height:30px;
+      padding:5px;
+      border-radius:11px;
+    }
+    .pricePaymentField label,.statusField label{
+      display:none;
+    }
+    .pricePaymentField{
+      margin-bottom:5px;
+    }
+    .pricePaymentField input{
+      min-height:36px;
+      padding:7px 9px;
+      border-radius:11px;
+      font-size:16px;
+      font-weight:800;
+    }
+    .paymentButtons{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:5px;
+      margin-top:5px;
     }
     .statusButtons{
-      gap:3px;
-      margin-top:3px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:5px;
+      margin-top:0;
     }
-    .statusBtn{
-      min-height:26px !important;
-      padding:3px 3px !important;
-      font-size:11px !important;
-      border-radius:8px !important;
+    .paymentBtn,.statusBtn{
+      min-height:36px;
+      padding:6px 5px;
+      font-size:12px;
+      border-radius:11px;
+      background:rgba(255,255,255,.035);
+      border-color:rgba(122,146,132,.22);
+    }
+    .paymentBtn.active,.statusBtn.active{
+      background:rgba(80,200,120,.17);
+      color:#9ff0b8;
+      border-color:rgba(80,200,120,.68);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .statusField{
+      margin-bottom:5px;
     }
     .btn.primary{
-      min-height:32px !important;
-      padding:5px !important;
-      font-size:14px !important;
-      border-radius:9px !important;
+      min-height:40px;
+      padding:8px;
+      font-size:15px;
+      border-radius:12px;
+      box-shadow:0 8px 18px rgba(80,200,120,.18);
     }
     .stickySave{
-      margin-top:1px !important;
-      bottom:2px !important;
+      bottom:5px;
+      margin-top:3px;
     }
     @media(max-width:760px){
-      .statusButtons{
-        gap:3px;
-        margin-top:3px;
+      body{
+        padding:5px;
       }
-      .statusBtn{
-        min-height:25px !important;
-        padding:3px 3px !important;
-        font-size:11px !important;
-        border-radius:8px !important;
+      .tabs{
+        top:4px;
+        margin-bottom:5px;
+        gap:2px;
+        padding:2px;
+      }
+      .tab{
+        padding:6px 3px;
+        font-size:11px;
+        min-height:26px;
+        line-height:1;
+      }
+      .card{
+        padding:7px;
+        border-radius:14px;
+      }
+      .topInputGrid{
+        grid-template-columns:.62fr 1.38fr;
+        gap:5px;
+        margin-bottom:5px;
+      }
+      .dateField label,.clientField label{
+        display:none;
+      }
+      .dateField input,.clientField select{
+        min-height:34px;
+        padding:6px 7px;
+        border-radius:10px;
+      }
+      .dateField input{
+        font-size:12px;
+        letter-spacing:-.04em;
+      }
+      .clientField select{
+        font-size:13px;
+      }
+      .quickClients{
+        gap:4px;
+      }
+      .quickClientBtn{
+        min-height:29px;
+        padding:5px 5px;
+        font-size:11px;
+        border-radius:10px;
+      }
+      .carField input{
+        min-height:34px;
+        padding:6px 8px;
+        font-size:14px;
+      }
+      .carPanel{
+        padding:5px;
+        border-radius:13px;
+      }
+      svg.car{
+        max-height:43vh;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:34px;
+        padding:5px 4px;
+        font-size:12px;
       }
       .btn.primary{
-        min-height:31px !important;
-        padding:4px !important;
-        font-size:14px !important;
-        border-radius:8px !important;
-      }
-      .stickySave{
-        margin-top:1px !important;
-        bottom:2px !important;
+        min-height:38px;
+        padding:7px;
+        font-size:15px;
       }
     }
 
@@ -876,21 +1069,21 @@
       <div class="grid">
         <div class="card">
           <form id="incomeForm">
-            <div class="row dateClientRow">
+            <div class="topInputGrid">
               <div class="field dateField">
                 <label>Дата</label>
                 <input id="date" type="date" required />
               </div>
-              <div class="field">
-                <label>Клиент / организация</label>
+              <div class="field clientField">
+                <label>Клиент</label>
                 <select id="client" required></select>
-                <div class="quickClients" id="quickClients"></div>
               </div>
+              <div class="quickClients" id="quickClients"></div>
             </div>
 
             <div class="field carField">
               <label>Автомобиль</label>
-              <input id="car" type="text" placeholder="Авто" autocomplete="off" />
+              <input id="car" type="text" placeholder="Автомобиль" autocomplete="off" />
             </div>
 
             <div class="field">
@@ -957,7 +1150,7 @@
               <label>Стоимость</label>
               <input id="price" type="number" inputmode="numeric" min="0" step="1" placeholder="0" required />
               <div class="paymentButtons" id="paymentButtons">
-                <button type="button" class="paymentBtn active" data-payment="наличные">Нал.</button>
+                <button type="button" class="paymentBtn active" data-payment="наличные">Наличные</button>
                 <button type="button" class="paymentBtn" data-payment="перевод">Перевод</button>
                 <button type="button" class="paymentBtn" data-payment="счет">Счёт</button>
               </div>
@@ -1587,7 +1780,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>${escapeHtml(period.title)}</title>
+<title>Доходы PDR polished</title>
 <style>
   @page { size: A4; margin: 14mm; }
   *{box-sizing:border-box}
@@ -1601,49 +1794,242 @@
   .total{margin-top:12px;text-align:right;font-size:15px;font-weight:bold}
   .footer{margin-top:18px;color:#777;font-size:10px}
 
-    .statusField{
+    /* polished compact layout */
+    body{
+      background:
+        radial-gradient(circle at 85% 0%, rgba(80,200,120,.22), transparent 30%),
+        linear-gradient(180deg, #0b100e 0%, #111814 52%, #0d1210 100%);
+    }
+    .tabs{
+      border:1px solid rgba(80,200,120,.18);
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+    .tab{
+      letter-spacing:.01em;
+    }
+    .tab.active{
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,.28), 0 6px 14px rgba(80,200,120,.18);
+    }
+    .card{
+      border-color:rgba(80,200,120,.13);
+      background:
+        linear-gradient(180deg, rgba(31,43,37,.96), rgba(18,26,22,.96));
+      box-shadow:0 14px 34px rgba(0,0,0,.32);
+    }
+    input,select{
+      border-color:rgba(122,146,132,.23);
+      background:rgba(8,12,10,.74);
+    }
+    .topInputGrid{
+      display:grid;
+      grid-template-columns:.72fr 1.28fr;
+      gap:6px;
+      margin-bottom:5px;
+    }
+    .topInputGrid .field{
+      margin-bottom:0;
+    }
+    .quickClients{
+      grid-column:1 / -1;
+      margin-top:0;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:5px;
+    }
+    .quickClientBtn{
+      min-width:0;
+      max-width:none;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      min-height:31px;
+      padding:6px 7px;
+      border-radius:12px;
+      background:rgba(255,255,255,.035);
+      border-color:rgba(122,146,132,.22);
+    }
+    .quickClientBtn.active{
+      background:rgba(80,200,120,.18);
+      color:#9ff0b8;
+      border-color:rgba(80,200,120,.72);
+    }
+    .dateField label,.clientField label{
+      font-size:10px;
       margin-bottom:2px;
+      opacity:.8;
+    }
+    .dateField input,.clientField select{
+      min-height:36px;
+      padding:6px 8px;
+      border-radius:11px;
+      font-size:13px;
+    }
+    .clientField select{
+      font-size:14px;
+    }
+    .carField{
+      margin-bottom:5px;
+    }
+    .carField label{
+      display:none;
+    }
+    .carField input{
+      min-height:36px;
+      padding:7px 9px;
+      border-radius:11px;
+      font-size:15px;
+    }
+    .carPanel{
+      border-color:rgba(80,200,120,.14);
+      background:
+        radial-gradient(circle at 50% 15%, rgba(80,200,120,.12), transparent 32%),
+        linear-gradient(180deg, rgba(11,17,14,.92), rgba(15,22,19,.92));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    .part{
+      fill:#19251f;
+      stroke:rgba(190,213,199,.42);
+    }
+    .part.selected{
+      fill:rgba(80,200,120,.78);
+      stroke:#e4ffeb;
+      filter: drop-shadow(0 0 9px rgba(80,200,120,.48));
+    }
+    .labelSvg{
+      fill:#f4fff7;
+      opacity:.96;
+      font-weight:900;
+    }
+    .selectedBox{
+      border-color:rgba(80,200,120,.16);
+      background:rgba(8,12,10,.54);
+      min-height:30px;
+      padding:5px;
+      border-radius:11px;
+    }
+    .pricePaymentField label,.statusField label{
+      display:none;
+    }
+    .pricePaymentField{
+      margin-bottom:5px;
+    }
+    .pricePaymentField input{
+      min-height:36px;
+      padding:7px 9px;
+      border-radius:11px;
+      font-size:16px;
+      font-weight:800;
+    }
+    .paymentButtons{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:5px;
+      margin-top:5px;
     }
     .statusButtons{
-      gap:3px;
-      margin-top:3px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:5px;
+      margin-top:0;
     }
-    .statusBtn{
-      min-height:26px !important;
-      padding:3px 3px !important;
-      font-size:11px !important;
-      border-radius:8px !important;
+    .paymentBtn,.statusBtn{
+      min-height:36px;
+      padding:6px 5px;
+      font-size:12px;
+      border-radius:11px;
+      background:rgba(255,255,255,.035);
+      border-color:rgba(122,146,132,.22);
+    }
+    .paymentBtn.active,.statusBtn.active{
+      background:rgba(80,200,120,.17);
+      color:#9ff0b8;
+      border-color:rgba(80,200,120,.68);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .statusField{
+      margin-bottom:5px;
     }
     .btn.primary{
-      min-height:32px !important;
-      padding:5px !important;
-      font-size:14px !important;
-      border-radius:9px !important;
+      min-height:40px;
+      padding:8px;
+      font-size:15px;
+      border-radius:12px;
+      box-shadow:0 8px 18px rgba(80,200,120,.18);
     }
     .stickySave{
-      margin-top:1px !important;
-      bottom:2px !important;
+      bottom:5px;
+      margin-top:3px;
     }
     @media(max-width:760px){
-      .statusButtons{
-        gap:3px;
-        margin-top:3px;
+      body{
+        padding:5px;
       }
-      .statusBtn{
-        min-height:25px !important;
-        padding:3px 3px !important;
-        font-size:11px !important;
-        border-radius:8px !important;
+      .tabs{
+        top:4px;
+        margin-bottom:5px;
+        gap:2px;
+        padding:2px;
+      }
+      .tab{
+        padding:6px 3px;
+        font-size:11px;
+        min-height:26px;
+        line-height:1;
+      }
+      .card{
+        padding:7px;
+        border-radius:14px;
+      }
+      .topInputGrid{
+        grid-template-columns:.62fr 1.38fr;
+        gap:5px;
+        margin-bottom:5px;
+      }
+      .dateField label,.clientField label{
+        display:none;
+      }
+      .dateField input,.clientField select{
+        min-height:34px;
+        padding:6px 7px;
+        border-radius:10px;
+      }
+      .dateField input{
+        font-size:12px;
+        letter-spacing:-.04em;
+      }
+      .clientField select{
+        font-size:13px;
+      }
+      .quickClients{
+        gap:4px;
+      }
+      .quickClientBtn{
+        min-height:29px;
+        padding:5px 5px;
+        font-size:11px;
+        border-radius:10px;
+      }
+      .carField input{
+        min-height:34px;
+        padding:6px 8px;
+        font-size:14px;
+      }
+      .carPanel{
+        padding:5px;
+        border-radius:13px;
+      }
+      svg.car{
+        max-height:43vh;
+      }
+      .paymentBtn,.statusBtn{
+        min-height:34px;
+        padding:5px 4px;
+        font-size:12px;
       }
       .btn.primary{
-        min-height:31px !important;
-        padding:4px !important;
-        font-size:14px !important;
-        border-radius:8px !important;
-      }
-      .stickySave{
-        margin-top:1px !important;
-        bottom:2px !important;
+        min-height:38px;
+        padding:7px;
+        font-size:15px;
       }
     }
 
