@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0f1412"/>
+  <circle cx="256" cy="256" r="176" fill="#17201c" stroke="#50c878" stroke-width="18"/>
+  <path d="M130 276 C185 222 238 332 382 190" fill="none" stroke="#50c878" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="256" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="56" font-weight="700" fill="#eef7f1">PDR</text>
+</svg>
