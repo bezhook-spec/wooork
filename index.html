@@ -47,22 +47,22 @@
       gap:8px;
       background:rgba(23,32,28,.72);
       border:1px solid var(--line);
-      padding:4px;
+      padding:2px;
       border-radius:999px;
       position:sticky;
       top:10px;
       z-index:5;
       backdrop-filter:blur(12px);
-      margin-bottom:6px;
+      margin-bottom:3px;
     }
     .tab{
       flex:1;
       border:0;
       border-radius:999px;
-      padding:8px 8px;
+      padding:5px 4px;
       color:var(--muted);
       background:transparent;
-      font-weight:800;
+      font-weight:750;
       cursor:pointer;
     }
     .tab.active{background:var(--green);color:#07100b}
@@ -308,11 +308,20 @@
     .clientStatLine .sum{color:var(--green2);font-weight:900}
 
 
+
+    .dateClientRow{grid-template-columns:.72fr 1.28fr}
+    .dateField input{
+      padding-left:7px;
+      padding-right:5px;
+      font-size:13px;
+      letter-spacing:-.03em;
+    }
+
     .filterSummary{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:8px;
-      margin-bottom:6px;
+      margin-bottom:3px;
     }
     .summaryBox{
       background:rgba(16,23,20,.72);
@@ -326,7 +335,7 @@
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:8px;
-      margin-bottom:6px;
+      margin-bottom:3px;
     }
     .btn.print{
       background:rgba(80,200,120,.16);
@@ -345,7 +354,7 @@
       background:rgba(16,23,20,.72);
       border-radius:16px;
       padding:7px;
-      margin-bottom:6px;
+      margin-bottom:3px;
     }
     .recordTop{
       display:flex;
@@ -367,15 +376,19 @@
     }
 
     @media(max-width:760px){
-      body{padding:5px}
+      body{padding:3px}
       .wrap{margin-bottom:20px}
       .tabs{
-        top:4px;
-        margin-bottom:5px;
+        top:3px;
+        margin-bottom:3px;
+        gap:2px;
+        padding:2px;
       }
       .tab{
-        padding:8px 4px;
-        font-size:12px;
+        padding:5px 2px;
+        font-size:11px;
+        line-height:1;
+        min-height:24px;
       }
       .card{
         padding:7px;
@@ -390,9 +403,23 @@
         border-radius:11px;
         font-size:15px;
       }
+
+      .dateClientRow{
+        grid-template-columns:.64fr 1.36fr;
+        gap:5px;
+      }
+      .dateField label{
+        display:none;
+      }
+      .dateField input{
+        min-height:34px;
+        padding:6px 4px;
+        font-size:12px;
+        border-radius:10px;
+      }
       .quickClients{
         gap:4px;
-        margin-top:5px;
+        margin-top:3px;
       }
       .quickClientBtn{
         min-height:30px;
@@ -441,12 +468,16 @@
 
       .wrap{margin-bottom:20px}
       .tabs{
-        top:4px;
-        margin-bottom:5px;
+        top:3px;
+        margin-bottom:3px;
+        gap:2px;
+        padding:2px;
       }
       .tab{
-        padding:8px 4px;
-        font-size:12px;
+        padding:5px 2px;
+        font-size:11px;
+        line-height:1;
+        min-height:24px;
       }
       .card{
         padding:7px;
@@ -460,6 +491,20 @@
         padding:8px 9px;
         border-radius:11px;
         font-size:15px;
+      }
+
+      .dateClientRow{
+        grid-template-columns:.64fr 1.36fr;
+        gap:5px;
+      }
+      .dateField label{
+        display:none;
+      }
+      .dateField input{
+        min-height:34px;
+        padding:6px 4px;
+        font-size:12px;
+        border-radius:10px;
       }
       .quickClients{
         gap:4px;
@@ -514,7 +559,7 @@
       header{
         display:flex;
         align-items:center;
-        margin-bottom:6px;
+        margin-bottom:3px;
       }
       h1{font-size:21px}
       .sub{font-size:12px;line-height:1.25}
@@ -530,7 +575,8 @@
         padding:10px 6px;
         font-size:13px;
       }
-      .grid,.row,.stats,.listEditor{grid-template-columns:1fr}
+      .grid,.stats,.listEditor{grid-template-columns:1fr}
+      .row{grid-template-columns:.72fr 1.28fr}
       .grid{gap:10px}
       .card{
         padding:7px;
@@ -667,8 +713,8 @@
       <div class="grid">
         <div class="card">
           <form id="incomeForm">
-            <div class="row">
-              <div class="field">
+            <div class="row dateClientRow">
+              <div class="field dateField">
                 <label>Дата</label>
                 <input id="date" type="date" required />
               </div>
