@@ -1,4 +1,4 @@
-const CACHE_NAME = "pdr-income-v13-edit-records";
+const CACHE_NAME = "pdr-income-v14-pdf-cleanup";
 const FILES = [
   "./",
   "./index.html",

@@ -2686,7 +2686,6 @@
       .map(r => `
         <tr>
           <td>${escapeHtml(ruDate(r.date))}</td>
-          <td>${escapeHtml(r.client || "")}</td>
           <td>${escapeHtml(r.car || "")}</td>
           <td>${escapeHtml((r.elements || []).join(", "))}</td>
           <td class="money">${money(r.price)}</td>
@@ -2715,21 +2714,18 @@
   th{background:#f0f0f0;text-align:left}
   .money{text-align:right;white-space:nowrap}
   .total{margin-top:12px;text-align:right;font-size:15px;font-weight:bold}
-  .footer{margin-top:18px;color:#777;font-size:10px}
 
   </style>
 </head>
 <body>
   <h1>${escapeHtml(period.title)}</h1>
   <div class="meta">
-    ${escapeHtml(clientLabel)}: ${escapeHtml(client)}<br>
-    Статус: ${escapeHtml(status)}
+    ${escapeHtml(clientLabel)}: ${escapeHtml(client)}
   </div>
   <table>
     <thead>
       <tr>
         <th>Дата</th>
-        <th>Клиент</th>
         <th>Автомобиль</th>
         <th>Элемент</th>
         <th>Стоимость</th>
@@ -2738,7 +2734,6 @@
     <tbody>${tableRows}</tbody>
   </table>
   <div class="total">Итого: ${money(total)}</div>
-  <div class="footer">Сформировано из локального учета доходов PDR</div>
 <script>
   window.onload = () => {
     setTimeout(() => window.print(), 250);
