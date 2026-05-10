@@ -2374,8 +2374,8 @@
         <td><span class="badge ${r.status === "оплачено" ? "paid" : "unpaid"}">${escapeHtml(r.status || "")}</span></td>
         <td>
           <div class="recordActions">
-            <button class="btn small" data-edit-record="${r.id}">Изменить</button>
-            <button class="btn small danger" data-del-record="${r.id}">Удалить</button>
+            <button type="button" class="btn small" data-edit-record="${r.id}">Изменить</button>
+            <button type="button" class="btn small danger" data-del-record="${r.id}">Удалить</button>
           </div>
         </td>
       </tr>
@@ -2394,8 +2394,8 @@
         <span class="badge paymentBadge ${paymentClass(r.paymentMethod)}" style="margin-left:5px">${escapeHtml(r.paymentMethod || "")}</span>
         <div class="recordLine"><b>Элементы:</b> ${escapeHtml((r.elements || []).join(", "))}</div>
         <div class="recordActions" style="margin-top:10px">
-          <button class="btn small" data-edit-record="${r.id}">Изменить</button>
-          <button class="btn small danger" data-del-record="${r.id}">Удалить</button>
+          <button type="button" class="btn small" data-edit-record="${r.id}">Изменить</button>
+          <button type="button" class="btn small danger" data-del-record="${r.id}">Удалить</button>
         </div>
       </div>
     `).join("");
@@ -2444,6 +2444,12 @@
     renderAll();
     ensureClientOption(record.client);
     $("client").value = record.client || $("client").value;
+    setTimeout(() => {
+      $("date").blur();
+      if(document.activeElement && document.activeElement !== document.body){
+        document.activeElement.blur();
+      }
+    }, 0);
     showToast("Запись открыта для редактирования");
   }
 
