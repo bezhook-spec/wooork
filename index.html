@@ -2412,12 +2412,12 @@
     }
   }
 
-  function resetEntryForm({keepPayment = true} = {}){
+  function resetEntryForm({keepPayment = true, keepStatus = true} = {}){
     $("car").value = "";
     $("price").value = "";
     selectedElements = [];
-    selectedStatus = "оплачено";
     if(!keepPayment) selectedPayment = "наличные";
+    if(!keepStatus) selectedStatus = "оплачено";
     editingRecordId = null;
     $("date").value = todayISO();
     renderAll();
@@ -2541,7 +2541,7 @@
     save();
 
     const wasEditing = editingRecordId !== null;
-    resetEntryForm({keepPayment:true});
+    resetEntryForm({keepPayment:true, keepStatus:true});
     showToast(wasEditing ? "Запись обновлена" : "Доход сохранен");
   });
 
@@ -2556,7 +2556,7 @@
 
   $("client").addEventListener("change", renderQuickClients);
   $("cancelEditBtn").addEventListener("click", () => {
-    resetEntryForm({keepPayment:true});
+    resetEntryForm({keepPayment:true, keepStatus:true});
     showToast("Редактирование отменено");
   });
 
