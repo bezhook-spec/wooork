@@ -1,2801 +1,1378 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Доходы PDR S23 Plus</title>
-  <style>
-    :root{
-      --bg:#0f1412;
-      --card:#17201c;
-      --card2:#1d2823;
-      --text:#eef7f1;
-      --muted:#aab8af;
-      --line:#2a3932;
-      --green:#50c878;
-      --green2:#76e29a;
-      --red:#ff6b6b;
-      --yellow:#f1c453;
-      --input:#101714;
-      --shadow: 0 18px 40px rgba(0,0,0,.28);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    html{height:100%}
-    body{
-      margin:0;
-      min-height:100%;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:radial-gradient(circle at top right,rgba(80,200,120,.18),transparent 32%),var(--bg);
-      color:var(--text);
-      padding:7px;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .wrap{max-width:1060px;margin:0 auto 90px}
-    header{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      justify-content:space-between;
-      margin-bottom:8px;
-    }
-    h1{margin:0;font-size:25px;letter-spacing:-.03em}
-    h2{margin:0 0 12px;font-size:18px}
-    .sub{color:var(--muted);font-size:14px;margin-top:5px}
-    .tabs{
-      display:flex;
-      gap:8px;
-      background:rgba(23,32,28,.72);
-      border:1px solid var(--line);
-      padding:2px;
-      border-radius:999px;
-      position:sticky;
-      top:10px;
-      z-index:5;
-      backdrop-filter:blur(12px);
-      margin-bottom:3px;
-    }
-    .tab{
-      flex:1;
-      border:0;
-      border-radius:999px;
-      padding:5px 4px;
-      color:var(--muted);
-      background:transparent;
-      font-weight:750;
-      cursor:pointer;
-    }
-    .tab.active{background:var(--green);color:#07100b}
-    .grid{display:grid;grid-template-columns:1fr;gap:14px;max-width:760px}
-    .card{
-      background:linear-gradient(180deg,rgba(29,40,35,.94),rgba(23,32,28,.94));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:8px;
-      box-shadow:var(--shadow);
-    }
-    label{display:block;color:var(--muted);font-size:12px;margin:0 0 4px}
-    input,select,button,textarea{font:inherit}
-    input,select{
-      width:100%;
-      border:1px solid var(--line);
-      background:var(--input);
-      color:var(--text);
-      border-radius:14px;
-      padding:9px 10px;
-      outline:none;
-      min-height:40px;
-    }
-    input:focus,select:focus{border-color:rgba(80,200,120,.8)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-    .field{margin-bottom:6px}
-    .btn{
-      border:0;
-      border-radius:14px;
-      padding:9px 10px;
-      font-weight:850;
-      cursor:pointer;
-      background:var(--card2);
-      color:var(--text);
-      border:1px solid var(--line);
-      min-height:38px;
-    }
-    .btn.primary{
-      background:linear-gradient(180deg,var(--green2),var(--green));
-      color:#07100b;
-      border:0;
-      width:100%;
-      font-size:17px;
-      padding:8px;
-      min-height:56px;
-    }
-    .btn.danger{border-color:rgba(255,107,107,.5);color:#ffd0d0}
-    .btn.small{padding:9px 11px;font-size:13px;border-radius:12px;min-height:38px}
-    .chips{display:flex;gap:5px;flex-wrap:wrap}
-    .chip{
-      border:1px solid var(--line);
-      background:var(--input);
-      color:var(--muted);
-      border-radius:999px;
-      padding:7px 9px;
-      cursor:pointer;
-      user-select:none;
-      font-weight:750;
-      font-size:14px;
-      min-height:34px;
-    }
-    .chip.active{
-      background:rgba(80,200,120,.16);
-      color:var(--green2);
-      border-color:rgba(80,200,120,.75);
-    }
-    .paymentButtons,.statusButtons{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:5px;
-      margin-top:5px;
-    }
-    .statusButtons{grid-template-columns:1fr 1fr}
-    .paymentBtn,.statusBtn{
-      border:1px solid var(--line);
-      background:var(--input);
-      color:var(--muted);
-      border-radius:14px;
-      padding:9px 6px;
-      cursor:pointer;
-      user-select:none;
-      font-weight:900;
-      font-size:14px;
-      min-height:40px;
-    }
-    .paymentBtn.active,.statusBtn.active{
-      background:rgba(80,200,120,.16);
-      color:var(--green2);
-      border-color:rgba(80,200,120,.75);
-    }
-    .selectedBox{
-      border:1px solid var(--line);
-      background:rgba(16,23,20,.72);
-      border-radius:15px;
-      padding:7px;
-      min-height:48px;
-    }
-    .selectedBox .none{color:var(--muted);font-size:14px}
-    .selectedField.emptySelected{display:none}
-    .compactCarPanel{padding-top:10px}
-    .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .stat{
-      background:rgba(16,23,20,.72);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:9px;
-    }
-    .stat .name{color:var(--muted);font-size:13px}
-    .stat .num{font-size:24px;font-weight:900;margin-top:4px;letter-spacing:-.03em}
-    .num.good{color:var(--green2)}
-    .num.bad{color:var(--yellow)}
-    .hint{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.45}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-    .search{flex:1;min-width:170px}
-    .tableWrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
-    table{width:100%;border-collapse:collapse;min-width:760px}
-    th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:14px}
-    th{color:var(--muted);background:rgba(16,23,20,.85);position:sticky;top:0}
-    tr:last-child td{border-bottom:0}
-    .badge{display:inline-block;border-radius:999px;padding:5px 9px;font-weight:800;font-size:12px;white-space:nowrap}
-    .paid{background:rgba(80,200,120,.16);color:var(--green2)}
-    .unpaid{background:rgba(241,196,83,.16);color:var(--yellow)}
-    .hidden{display:none}
-    .listEditor{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .items{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-    .itemLine{
-      display:flex;gap:8px;align-items:center;justify-content:space-between;
-      background:rgba(16,23,20,.72);border:1px solid var(--line);border-radius:13px;padding:9px 10px;
-    }
-    .itemLine span{overflow:hidden;text-overflow:ellipsis}
-    .empty{color:var(--muted);text-align:center;padding:28px}
-    .toast{
-      position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
-      background:#e9fff0;color:#07100b;padding:12px 15px;border-radius:999px;font-weight:800;
-      box-shadow:0 12px 30px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.18s;z-index:20;
-      white-space:nowrap;
-    }
-    .toast.show{opacity:1;bottom:30px}
-
-    .carPanel{
-      border:1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 18%, rgba(80,200,120,.10), transparent 30%),
-        rgba(16,23,20,.74);
-      border-radius:18px;
-      padding:7px;
-      overflow:hidden;
-    }
-    .carTop{
-      display:flex;
-      justify-content:space-between;
-      gap:6px;
-      align-items:center;
-      margin-bottom:8px;
-    }
-    .carTop .title{font-weight:900}
-    .carTop .mini{color:var(--muted);font-size:12px}
-    .carSvgWrap{
-      width:100%;
-      overflow:auto;
-      padding:4px;
-      overscroll-behavior-x:contain;
-    }
-    svg.car{
-      width:100%;
-      min-width:500px;
-      max-width:720px;
-      display:block;
-      margin:auto;
-      touch-action:manipulation;
-    }
-    .part{
-      fill:#1c2a24;
-      stroke:#6c7b72;
-      stroke-width:1.8;
-      cursor:pointer;
-      transition:.14s;
-    }
-    .part:hover{fill:#294236;stroke:#91e7aa}
-    .part.selected{
-      fill:rgba(80,200,120,.72);
-      stroke:#d9ffe3;
-      filter: drop-shadow(0 0 8px rgba(80,200,120,.55));
-    }
-    .labelSvg{
-      fill:#eaf6ee;
-      font-size:12px;
-      font-weight:800;
-      pointer-events:none;
-      text-anchor:middle;
-      dominant-baseline:middle;
-    }
-    .carNose{fill:none;stroke:#6c7b72;stroke-width:2;opacity:.8;pointer-events:none}
-    .legend{
-      display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;color:var(--muted);font-size:12px;
-    }
-    .legend span{border:1px solid var(--line);border-radius:999px;padding:6px 8px;background:rgba(16,23,20,.65)}
-
-    .quickClients{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:7px;
-      margin-top:8px;
-    }
-    .quickClientBtn{
-      border:1px solid var(--line);
-      background:rgba(16,23,20,.72);
-      color:var(--muted);
-      border-radius:999px;
-      padding:8px 10px;
-      cursor:pointer;
-      font-size:13px;
-      font-weight:800;
-      min-height:36px;
-      white-space:nowrap;
-      min-width:0;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .quickClientBtn.active{
-      background:rgba(80,200,120,.16);
-      color:var(--green2);
-      border-color:rgba(80,200,120,.75);
-    }
-    .clientStats{
-      margin-top:14px;
-      display:grid;
-      gap:8px;
-    }
-    .clientStatLine{
-      display:grid;
-      grid-template-columns:1fr auto auto;
-      gap:6px;
-      align-items:center;
-      background:rgba(16,23,20,.72);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:7px;
-      color:var(--muted);
-      font-size:14px;
-    }
-    .clientStatLine b{color:var(--text)}
-    .clientStatLine .sum{color:var(--green2);font-weight:900}
-
-    .periodButtons{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:7px;
-      margin-bottom:10px;
-    }
-    .periodBtn{
-      border:1px solid var(--line);
-      background:rgba(16,23,20,.72);
-      color:var(--muted);
-      border-radius:13px;
-      min-height:40px;
-      padding:8px 7px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .periodBtn.active{
-      background:rgba(80,200,120,.18);
-      border-color:rgba(80,200,120,.72);
-      color:var(--green2);
-    }
-    .stats.kpiGrid{
-      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    }
-    .stat .num.warm{color:var(--yellow)}
-    .statsSectionTitle{
-      margin:16px 0 8px;
-      font-size:16px;
-    }
-    .debtList,.topClientList,.dailyChart,.paymentBreakdown,.serviceGrid{
-      display:grid;
-      gap:8px;
-    }
-    .debtOrgCard,.topClientCard,.chartRow,.paymentRow,.serviceBlock{
-      border:1px solid var(--line);
-      background:rgba(16,23,20,.72);
-      border-radius:15px;
-      padding:10px;
-    }
-    .debtOrgTop,.topClientTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:8px;
-    }
-    .debtOrgName,.topClientName{
-      color:var(--text);
-      font-weight:950;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .debtAmount{
-      color:var(--yellow);
-      font-weight:950;
-      white-space:nowrap;
-    }
-    .topClientAmount{
-      color:var(--green2);
-      font-weight:950;
-      white-space:nowrap;
-    }
-    .debtOrgMeta,.topClientMeta{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:6px;
-      line-height:1.35;
-    }
-    .chartRow,.paymentRow{
-      display:grid;
-      grid-template-columns:auto minmax(76px,auto) 1fr;
-      gap:8px;
-      align-items:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .chartValue,.paymentValue{
-      color:var(--text);
-      font-weight:900;
-      text-align:right;
-      white-space:nowrap;
-    }
-    .chartValue.paid{color:var(--green2)}
-    .chartValue.unpaid{color:var(--yellow)}
-    .chartValue.mixed{color:var(--text)}
-    .chartBreakdown{
-      margin-top:2px;
-      font-size:11px;
-      line-height:1.2;
-      color:var(--muted);
-      text-align:right;
-      white-space:nowrap;
-    }
-    .chartBreakdown .paidPart{color:var(--green2)}
-    .chartBreakdown .unpaidPart{color:var(--yellow)}
-    .barTrack{
-      height:10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      overflow:hidden;
-    }
-    .barFill{
-      height:100%;
-      min-width:2px;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--green),var(--green2));
-    }
-    .barFill.unpaid{
-      background:linear-gradient(90deg,var(--yellow),#ffd978);
-    }
-    .barFill.empty{
-      min-width:0;
-      background:transparent;
-    }
-    .debtActions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:7px;
-      margin-top:10px;
-    }
-    .statsEmpty{
-      border:1px dashed rgba(170,184,175,.35);
-      background:rgba(16,23,20,.42);
-      border-radius:15px;
-      padding:16px 12px;
-      color:var(--muted);
-      text-align:center;
-      font-weight:800;
-    }
-    .serviceGrid{
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    }
-    .serviceActions{
-      display:grid;
-      gap:8px;
-    }
-    .serviceInfo{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-    .fileInputHidden{display:none}
-
-
-
-
-    .carField{margin-bottom:4px}
-    .carField label,.pricePaymentField label,.statusField label{font-size:11px;margin-bottom:2px}
-    .carField input{
-      min-height:34px;
-      padding:6px 8px;
-      font-size:14px;
-    }
-    .pricePaymentField input{
-      min-height:36px;
-      padding:7px 9px;
-      font-size:15px;
-    }
-    .pricePaymentField{margin-bottom:4px}
-    .statusField{margin-bottom:4px}
-    .paymentButtons,.statusButtons{
-      gap:4px;
-      margin-top:4px;
-    }
-    .paymentBtn,.statusBtn{
-      min-height:34px;
-      padding:6px 4px;
-      font-size:12px;
-      border-radius:10px;
-    }
-    .btn.primary{
-      min-height:38px;
-      padding:8px;
-      font-size:15px;
-      border-radius:11px;
-    }
-    .stickySave{
-      margin-top:2px;
-      bottom:4px;
-    }
-
-    .dateClientRow{grid-template-columns:.72fr 1.28fr}
-    .dateField input{
-      padding-left:7px;
-      padding-right:5px;
-      font-size:13px;
-      letter-spacing:-.03em;
-    }
-
-    .filterSummary{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-bottom:3px;
-    }
-    .summaryBox{
-      background:rgba(16,23,20,.72);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:7px;
-    }
-    .summaryBox .name{color:var(--muted);font-size:12px}
-    .summaryBox .value{font-size:18px;font-weight:950;margin-top:2px}
-    .tableActions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-bottom:3px;
-    }
-    .btn.print{
-      background:rgba(80,200,120,.16);
-      border-color:rgba(80,200,120,.55);
-      color:var(--green2);
-    }
-    .btn.pay{
-      background:rgba(241,196,83,.13);
-      border-color:rgba(241,196,83,.55);
-      color:var(--yellow);
-    }
-
-    .mobileCards{display:none}
-    .recordCard{
-      border:1px solid var(--line);
-      background:rgba(16,23,20,.72);
-      border-radius:16px;
-      padding:7px;
-      margin-bottom:3px;
-    }
-    .recordTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:6px;
-      margin-bottom:8px;
-    }
-    .recordTitle{font-weight:900}
-    .recordMeta{color:var(--muted);font-size:13px;margin-top:2px}
-    .recordPrice{font-size:20px;font-weight:950;white-space:nowrap}
-    .recordLine{font-size:14px;color:var(--muted);margin-top:7px}
-    .recordLine b{color:var(--text)}
-    .stickySave{
-      position:sticky;
-      bottom:10px;
-      z-index:4;
-      margin-top:8px;
-    }
-
-    @media(max-width:760px){
-      body{padding:3px}
-      .wrap{margin-bottom:20px}
-      .tabs{
-        top:3px;
-        margin-bottom:3px;
-        gap:2px;
-        padding:2px;
-      }
-      .tab{
-        padding:5px 2px;
-        font-size:11px;
-        line-height:1;
-        min-height:24px;
-      }
-      .card{
-        padding:7px;
-        border-radius:13px;
-      }
-      .grid{gap:6px}
-      .field{margin-bottom:5px}
-      label{font-size:11px;margin-bottom:3px}
-      input,select{
-        min-height:38px;
-        padding:8px 9px;
-        border-radius:11px;
-        font-size:15px;
-      }
-
-      .dateClientRow{
-        grid-template-columns:.64fr 1.36fr;
-        gap:5px;
-      }
-      .dateField label{
-        display:none;
-      }
-      .dateField input{
-        min-height:34px;
-        padding:6px 4px;
-        font-size:12px;
-        border-radius:10px;
-      }
-      .quickClients{
-        gap:4px;
-        margin-top:3px;
-      }
-      .quickClientBtn{
-        min-height:30px;
-        padding:6px 6px;
-        font-size:11px;
-        border-radius:999px;
-      }
-      .carPanel{
-        padding:5px;
-        border-radius:12px;
-      }
-      .carSvgWrap{padding:0}
-      svg.car{
-        max-height:44vh;
-      }
-      .selectedBox{
-        min-height:30px;
-        padding:5px;
-        border-radius:11px;
-      }
-      .chip{
-        min-height:30px;
-        padding:6px 8px;
-        font-size:12px;
-      }
-
-      .carField{margin-bottom:3px}
-      .carField label,.pricePaymentField label,.statusField label{
-        display:none;
-      }
-      .carField input{
-        min-height:32px;
-        padding:6px 8px;
-        font-size:14px;
-        border-radius:10px;
-      }
-      .pricePaymentField input{
-        min-height:34px;
-        padding:6px 8px;
-        font-size:15px;
-        border-radius:10px;
-      }
-      .pricePaymentField,.statusField{
-        margin-bottom:3px;
-      }
-      .paymentButtons,.statusButtons{
-        gap:4px;
-        margin-top:4px;
-      }
-      .paymentBtn,.statusBtn{
-        min-height:32px;
-        padding:5px 3px;
-        font-size:12px;
-        border-radius:9px;
-      }
-      .btn.primary{
-        min-height:38px;
-        padding:7px;
-        font-size:15px;
-        border-radius:10px;
-      }
-      .stickySave{
-        bottom:3px;
-        margin-top:2px;
-      }
-      .paymentButtons,.statusButtons{
-        gap:4px;
-        margin-top:5px;
-      }
-      .paymentBtn,.statusBtn{
-        min-height:32px;
-        padding:5px 3px;
-        font-size:12px;
-        border-radius:9px;
-      }
-      .btn.primary{
-        min-height:38px;
-        font-size:15px;
-        border-radius:10px;
-        padding:7px;
-      }
-      .stickySave{
-        bottom:3px;
-        margin-top:2px;
-      }
-
-      .wrap{margin-bottom:20px}
-      .tabs{
-        top:3px;
-        margin-bottom:3px;
-        gap:2px;
-        padding:2px;
-      }
-      .tab{
-        padding:5px 2px;
-        font-size:11px;
-        line-height:1;
-        min-height:24px;
-      }
-      .card{
-        padding:7px;
-        border-radius:13px;
-      }
-      .grid{gap:6px}
-      .field{margin-bottom:5px}
-      label{font-size:11px;margin-bottom:3px}
-      input,select{
-        min-height:38px;
-        padding:8px 9px;
-        border-radius:11px;
-        font-size:15px;
-      }
-
-      .dateClientRow{
-        grid-template-columns:.64fr 1.36fr;
-        gap:5px;
-      }
-      .dateField label{
-        display:none;
-      }
-      .dateField input{
-        min-height:34px;
-        padding:6px 4px;
-        font-size:12px;
-        border-radius:10px;
-      }
-      .quickClients{
-        gap:4px;
-        margin-top:5px;
-      }
-      .quickClientBtn{
-        min-height:30px;
-        padding:6px 6px;
-        font-size:11px;
-        border-radius:999px;
-      }
-      .carPanel{
-        padding:5px;
-        border-radius:12px;
-      }
-      .carSvgWrap{padding:0}
-      svg.car{
-        max-height:44vh;
-      }
-      .selectedBox{
-        min-height:30px;
-        padding:5px;
-        border-radius:11px;
-      }
-      .chip{
-        min-height:30px;
-        padding:6px 8px;
-        font-size:12px;
-      }
-
-      .carField{margin-bottom:3px}
-      .carField label,.pricePaymentField label,.statusField label{
-        display:none;
-      }
-      .carField input{
-        min-height:32px;
-        padding:6px 8px;
-        font-size:14px;
-        border-radius:10px;
-      }
-      .pricePaymentField input{
-        min-height:34px;
-        padding:6px 8px;
-        font-size:15px;
-        border-radius:10px;
-      }
-      .pricePaymentField,.statusField{
-        margin-bottom:3px;
-      }
-      .paymentButtons,.statusButtons{
-        gap:4px;
-        margin-top:4px;
-      }
-      .paymentBtn,.statusBtn{
-        min-height:32px;
-        padding:5px 3px;
-        font-size:12px;
-        border-radius:9px;
-      }
-      .btn.primary{
-        min-height:38px;
-        padding:7px;
-        font-size:15px;
-        border-radius:10px;
-      }
-      .stickySave{
-        bottom:3px;
-        margin-top:2px;
-      }
-      .paymentButtons,.statusButtons{
-        gap:4px;
-        margin-top:5px;
-      }
-      .paymentBtn,.statusBtn{
-        min-height:32px;
-        padding:5px 3px;
-        font-size:12px;
-        border-radius:9px;
-      }
-      .btn.primary{
-        min-height:38px;
-        font-size:15px;
-        border-radius:10px;
-        padding:7px;
-      }
-      .stickySave{
-        bottom:3px;
-        margin-top:2px;
-      }
-
-      .wrap{margin-bottom:40px}
-      header{
-        display:flex;
-        align-items:center;
-        margin-bottom:3px;
-      }
-      h1{font-size:21px}
-      .sub{font-size:12px;line-height:1.25}
-      header .btn{white-space:nowrap}
-      .tabs{
-        top:6px;
-        margin-left:-2px;
-        margin-right:-2px;
-        gap:4px;
-        padding:5px;
-      }
-      .tab{
-        padding:10px 6px;
-        font-size:13px;
-      }
-      .grid,.stats,.listEditor{grid-template-columns:1fr}
-      .row{grid-template-columns:.72fr 1.28fr}
-      .grid{gap:10px}
-      .card{
-        padding:7px;
-        border-radius:16px;
-      }
-      .desktopStats{order:-1}
-      .stats{
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-      }
-      .clientStatLine{
-        grid-template-columns:1fr auto;
-      }
-      .clientStatLine .sum{
-        grid-column:1 / -1;
-      }
-      .stat{
-        padding:7px;
-        border-radius:14px;
-      }
-      .stat .name{font-size:12px}
-      .stat .num{font-size:19px}
-      .field{margin-bottom:10px}
-      label{font-size:12px;margin-bottom:5px}
-      input,select{
-        min-height:46px;
-        padding:7px;
-        border-radius:13px;
-        font-size:16px;
-      }
-      .carPanel{
-        padding:9px;
-        border-radius:15px;
-      }
-      .carSvgWrap{
-        overflow:visible;
-        padding:0;
-      }
-      svg.car{
-        min-width:0;
-        width:100%;
-        max-width:none;
-        height:auto;
-        max-height:62vh;
-      }
-      .labelSvg{
-        font-size:13px;
-      }
-      .part{
-        stroke-width:2.2;
-      }
-      .legend{display:none}
-      .selectedBox{
-        min-height:40px;
-        padding:8px;
-      }
-      .chip{
-        min-height:38px;
-        padding:8px 10px;
-        font-size:13px;
-      }
-      .paymentButtons{
-        gap:7px;
-      }
-      .paymentBtn,.statusBtn{
-        min-height:48px;
-        padding:12px 5px;
-        font-size:14px;
-        border-radius:13px;
-      }
-      .btn.primary{
-        min-height:58px;
-        font-size:18px;
-        border-radius:16px;
-      }
-      .hint{font-size:12px}
-      .tableWrap{display:none}
-      .mobileCards{display:block}
-      .toolbar{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-      }
-      .filterSummary,.tableActions{
-        grid-template-columns:1fr;
-      }
-      .summaryBox .value{
-        font-size:17px;
-      }
-      .toolbar .search{
-        grid-column:1 / -1;
-        min-width:0;
-      }
-      .toolbar select{
-        max-width:none !important;
-      }
-      .toolbar .btn{
-        min-height:46px;
-      }
-      .toast{
-        max-width:92vw;
-        overflow:hidden;
-        text-overflow:ellipsis;
-      }
-    }
-
-    @media(max-width:390px){
-      body{padding:8px}
-      h1{font-size:19px}
-      header .btn.small{font-size:12px;padding:8px 9px}
-      .stat .num{font-size:17px}
-      .paymentBtn,.statusBtn{font-size:13px}
-      .quickClientBtn{font-size:12px;padding-left:7px;padding-right:7px}
-      .labelSvg{font-size:12px}
-    }
-
-    /* Dynamic layout layer */
-    body{
-      padding:clamp(6px, 2vw, 18px);
-    }
-    .wrap{
-      width:min(100%, 1120px);
-      margin-inline:auto;
-      margin-bottom:clamp(24px, 8vh, 90px);
-    }
-    header{
-      gap:clamp(8px, 2vw, 16px);
-      flex-wrap:wrap;
-    }
-    h1{
-      font-size:clamp(20px, 4vw, 30px);
-      letter-spacing:0;
-    }
-    .sub{
-      font-size:clamp(12px, 2.4vw, 14px);
-    }
-    .tabs{
-      top:clamp(4px, 1.5vw, 10px);
-      gap:clamp(3px, 1vw, 8px);
-      padding:clamp(3px, 1vw, 5px);
-      margin-bottom:clamp(6px, 1.6vw, 14px);
-    }
-    .tab{
-      min-height:clamp(32px, 8vw, 44px);
-      padding:clamp(7px, 2vw, 11px) clamp(5px, 1.8vw, 12px);
-      font-size:clamp(12px, 2.8vw, 14px);
-    }
-    .grid{
-      width:min(100%, 780px);
-      gap:clamp(8px, 2vw, 14px);
-    }
-    .card{
-      padding:clamp(8px, 2.2vw, 16px);
-      border-radius:clamp(13px, 3vw, 18px);
-    }
-    .row,
-    .dateClientRow{
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-    }
-    input,
-    select,
-    .btn{
-      min-height:clamp(38px, 10vw, 48px);
-    }
-    .quickClients{
-      grid-template-columns:repeat(auto-fit, minmax(96px, 1fr));
-      gap:clamp(5px, 1.6vw, 8px);
-    }
-    .stats,
-    .listEditor{
-      grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
-    }
-    .filterSummary,
-    .tableActions{
-      grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
-    }
-    .toolbar{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-      gap:clamp(6px, 1.8vw, 10px);
-    }
-    .toolbar .search{
-      min-width:0;
-    }
-    .toolbar select,
-    .toolbar .btn{
-      max-width:none !important;
-      width:100%;
-    }
-    .carSvgWrap{
-      overflow:visible;
-    }
-    svg.car{
-      min-width:0;
-      width:100%;
-      max-width:min(720px, 100%);
-      height:auto;
-      max-height:clamp(360px, 58dvh, 620px);
-    }
-    .paymentButtons{
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-    }
-    .statusButtons{
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-    }
-    .paymentBtn,
-    .statusBtn,
-    .quickClientBtn{
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .recordTop{
-      align-items:center;
-    }
-
-    @media(min-width:900px){
-      .grid{
-        width:min(72vw, 780px);
-      }
-      #screen-table .card,
-      #screen-stats .card,
-      #screen-settings .grid{
-        width:min(100%, 1060px);
-      }
-      #screen-table .card,
-      #screen-stats .card{
-        max-width:none;
-      }
-    }
-
-    @media(max-width:640px){
-      header{
-        align-items:flex-start;
-      }
-      header .btn{
-        flex:1 1 120px;
-      }
-      .row,
-      .dateClientRow{
-        grid-template-columns:minmax(118px, .8fr) minmax(0, 1.2fr);
-      }
-      .stats{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-      }
-      .tableWrap{
-        display:none;
-      }
-      .mobileCards{
-        display:block;
-      }
-      .toolbar .search{
-        grid-column:1 / -1;
-      }
-      .tableActions{
-        grid-template-columns:1fr;
-      }
-      svg.car{
-        max-height:clamp(330px, 54dvh, 560px);
-      }
-    }
-
-    @media(max-width:430px){
-      body{
-        padding:clamp(6px, 2vw, 10px);
-      }
-      .wrap{
-        max-width:430px;
-      }
-      .card{
-        padding:clamp(8px, 2.5vw, 11px);
-      }
-      .tabs{
-        margin-inline:0;
-      }
-      .tab{
-        font-size:12px;
-      }
-      .stats{
-        gap:7px;
-      }
-      .stat .num{
-        font-size:clamp(17px, 5vw, 22px);
-      }
-      .paymentBtn,
-      .statusBtn{
-        min-height:clamp(38px, 10vw, 46px);
-        font-size:clamp(12px, 3.2vw, 14px);
-      }
-      .btn.primary{
-        min-height:clamp(46px, 13vw, 58px);
-      }
-      .labelSvg{
-        font-size:clamp(11px, 3vw, 13px);
-      }
-      .periodButtons{
-        gap:5px;
-      }
-      .periodBtn{
-        min-height:38px;
-        padding:7px 4px;
-        font-size:12px;
-      }
-      .debtActions .btn{
-        min-height:42px;
-      }
-    }
-
-    @media(max-width:340px){
-      .row,
-      .dateClientRow,
-      .stats,
-      .paymentButtons,
-      .statusButtons{
-        grid-template-columns:1fr;
-      }
-      .quickClients{
-        grid-template-columns:1fr;
-      }
-      svg.car{
-        max-height:50dvh;
-      }
-    }
-
-    .paymentStatusRow,
-    .vehiclePriceRow{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:clamp(7px, 2vw, 12px);
-      align-items:start;
-      margin-bottom:clamp(7px, 2vw, 12px);
-    }
-    .paymentStatusRow .field,
-    .vehiclePriceRow .field{
-      margin-bottom:0;
-    }
-    .paymentField label,
-    .statusField label,
-    .carField label,
-    .pricePaymentField label{
-      display:block;
-      font-size:12px;
-      margin-bottom:5px;
-    }
-    .paymentField .paymentButtons,
-    .statusField .statusButtons{
-      margin-top:0;
-    }
-    .vehiclePriceRow{
-      grid-template-columns:minmax(0, 1.25fr) minmax(118px, .75fr);
-    }
-    .vehiclePriceRow input{
-      min-height:clamp(42px, 11vw, 50px);
-    }
-    .selectedField{
-      margin-top:clamp(6px, 1.5vw, 10px);
-    }
-
-    @media(max-width:640px){
-      .paymentStatusRow{
-        grid-template-columns:1fr;
-      }
-      .vehiclePriceRow{
-        grid-template-columns:minmax(0, 1.12fr) minmax(112px, .88fr);
-      }
-      .paymentField label,
-      .statusField label,
-      .carField label,
-      .pricePaymentField label{
-        display:block;
-        font-size:11px;
-      }
-    }
-
-    @media(max-width:360px){
-      .vehiclePriceRow{
-        grid-template-columns:1fr;
-      }
-    }
-
-    /* Premium service polish layer */
-    :root{
-      --bg:#0b100e;
-      --card:#121a16;
-      --card2:#18231e;
-      --surface:#101713;
-      --surface2:#17211c;
-      --text:#f1f8f3;
-      --muted:#9fb1a6;
-      --line:rgba(166,194,176,.16);
-      --green:#50c878;
-      --green2:#8be8a7;
-      --yellow:#f1c453;
-      --red:#ff6b6b;
-      --input:#0c1210;
-      --shadow:0 14px 34px rgba(0,0,0,.28);
-      --radius:16px;
-      --controlRadius:13px;
-      --focus:0 0 0 3px rgba(80,200,120,.16);
-      --pay-cash:#50c878;
-      --pay-cash-soft:rgba(80,200,120,.16);
-      --pay-cash-border:rgba(80,200,120,.45);
-      --pay-cash-text:#8be8a7;
-      --pay-transfer:#4ea1ff;
-      --pay-transfer-soft:rgba(78,161,255,.16);
-      --pay-transfer-border:rgba(78,161,255,.45);
-      --pay-transfer-text:#9dcaff;
-      --pay-invoice:#ffd34d;
-      --pay-invoice-soft:rgba(255,211,77,.15);
-      --pay-invoice-border:rgba(255,211,77,.42);
-      --pay-invoice-text:#ffe695;
-    }
-    body{
-      background:
-        radial-gradient(circle at 92% -12%, rgba(80,200,120,.18), transparent 30%),
-        linear-gradient(180deg,#0b100e 0%,#0d1411 52%,#090d0c 100%);
-      color:var(--text);
-    }
-    .wrap{
-      max-width:1080px;
-    }
-    .tabs{
-      background:rgba(13,20,17,.78);
-      border-color:rgba(166,194,176,.15);
-      box-shadow:0 10px 26px rgba(0,0,0,.22);
-    }
-    .tab{
-      color:var(--muted);
-      transition:background .16s ease,color .16s ease,transform .12s ease,opacity .12s ease;
-    }
-    .tab:active,
-    .btn:active,
-    .periodBtn:active,
-    .quickClientBtn:active,
-    .paymentBtn:active,
-    .statusBtn:active,
-    .chip:active{
-      transform:translateY(1px);
-    }
-    .tab.active{
-      background:linear-gradient(180deg,var(--green2),var(--green));
-      color:#06100a;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 18px rgba(80,200,120,.18);
-    }
-    .card,
-    .stat,
-    .summaryBox,
-    .recordCard,
-    .itemLine,
-    .debtOrgCard,
-    .topClientCard,
-    .chartRow,
-    .paymentRow,
-    .serviceBlock{
-      border-color:rgba(166,194,176,.14);
-      background:linear-gradient(180deg,rgba(24,35,30,.94),rgba(16,23,20,.94));
-      box-shadow:0 12px 28px rgba(0,0,0,.24);
-    }
-    .paymentRow{
-      grid-template-columns:minmax(80px,1fr) auto;
-      gap:7px 8px;
-      align-items:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .paymentLabel{
-      min-width:0;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .paymentValue{
-      text-align:right;
-      font-variant-numeric:tabular-nums;
-      white-space:nowrap;
-    }
-    .paymentBar{
-      grid-column:1 / -1;
-      width:100%;
-    }
-    .card{
-      border-radius:var(--radius);
-    }
-    h2{
-      color:#f7fff9;
-      font-weight:900;
-      letter-spacing:0;
-    }
-    label,
-    .stat .name,
-    .summaryBox .name,
-    .recordMeta,
-    .topClientMeta,
-    .debtOrgMeta{
-      color:var(--muted);
-    }
-    input,
-    select{
-      background:linear-gradient(180deg,rgba(12,18,16,.96),rgba(10,15,13,.96));
-      border-color:rgba(166,194,176,.18);
-      border-radius:var(--controlRadius);
-      color:var(--text);
-      min-height:42px;
-      transition:border-color .15s ease,box-shadow .15s ease,background .15s ease;
-    }
-    input:focus,
-    select:focus{
-      border-color:rgba(80,200,120,.75);
-      box-shadow:var(--focus);
-      background:#0b1210;
-    }
-    input::placeholder{
-      color:rgba(159,177,166,.65);
-    }
-    .btn,
-    .periodBtn,
-    .quickClientBtn,
-    .paymentBtn,
-    .statusBtn,
-    .chip{
-      border-color:rgba(166,194,176,.16);
-      background:rgba(18,28,23,.88);
-      color:var(--text);
-      border-radius:var(--controlRadius);
-      transition:border-color .15s ease,background .15s ease,color .15s ease,transform .12s ease,opacity .15s ease;
-    }
-    .btn:hover,
-    .periodBtn:hover,
-    .quickClientBtn:hover,
-    .paymentBtn:hover,
-    .statusBtn:hover,
-    .chip:hover{
-      border-color:rgba(139,232,167,.34);
-      background:rgba(24,36,30,.96);
-    }
-    .btn.primary{
-      background:linear-gradient(180deg,#9af0b2 0%,var(--green) 100%);
-      color:#06100a;
-      box-shadow:0 10px 20px rgba(80,200,120,.18);
-      min-height:50px;
-      border-radius:15px;
-    }
-    .btn.print,
-    .btn.pay,
-    .periodBtn.active,
-    .quickClientBtn.active,
-    .statusBtn.active,
-    .chip.active{
-      background:rgba(80,200,120,.16);
-      border-color:rgba(80,200,120,.58);
-      color:var(--green2);
-    }
-    .paymentBtn.active[data-payment="наличные"]{
-      background:var(--pay-cash-soft);
-      border-color:var(--pay-cash-border);
-      color:var(--pay-cash-text);
-    }
-    .paymentBtn.active[data-payment="перевод"]{
-      background:var(--pay-transfer-soft);
-      border-color:var(--pay-transfer-border);
-      color:var(--pay-transfer-text);
-    }
-    .paymentBtn.active[data-payment="счет"]{
-      background:var(--pay-invoice-soft);
-      border-color:var(--pay-invoice-border);
-      color:var(--pay-invoice-text);
-    }
-    .btn.pay{
-      background:rgba(241,196,83,.13);
-      border-color:rgba(241,196,83,.44);
-      color:var(--yellow);
-    }
-    .btn.danger{
-      background:rgba(255,107,107,.08);
-      border-color:rgba(255,107,107,.38);
-      color:#ffb8b8;
-    }
-    button:disabled,
-    .btn:disabled{
-      opacity:.46;
-      cursor:not-allowed;
-      transform:none;
-      filter:saturate(.75);
-    }
-    .stat{
-      padding:11px;
-      border-radius:15px;
-    }
-    .stat .num,
-    .summaryBox .value,
-    .recordPrice,
-    .debtAmount,
-    .topClientAmount{
-      letter-spacing:0;
-      font-variant-numeric:tabular-nums;
-    }
-    .stat .num{
-      font-size:clamp(20px,5vw,27px);
-      line-height:1.05;
-    }
-    .num.good,
-    .topClientAmount,
-    .chartValue.paid,
-    .paymentValue{
-      color:var(--green2);
-    }
-    .num.bad,
-    .num.warm,
-    .debtAmount,
-    .chartValue.unpaid{
-      color:var(--yellow);
-    }
-    .carPanel{
-      border-color:rgba(166,194,176,.14);
-      background:
-        radial-gradient(circle at 50% 18%, rgba(80,200,120,.10), transparent 34%),
-        linear-gradient(180deg,rgba(12,18,16,.92),rgba(15,23,19,.94));
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
-      border-radius:16px;
-    }
-    .part{
-      fill:#1b2922;
-      stroke:rgba(180,207,190,.42);
-      transition:fill .15s ease,stroke .15s ease,filter .15s ease;
-    }
-    .part:hover{
-      fill:#24382e;
-      stroke:rgba(139,232,167,.75);
-    }
-    .part.selected{
-      fill:rgba(80,200,120,.70);
-      stroke:#dfffe8;
-      filter:drop-shadow(0 0 6px rgba(80,200,120,.38));
-    }
-    .labelSvg{
-      fill:#f0fbf4;
-      opacity:.95;
-      font-weight:900;
-    }
-    .selectedBox{
-      background:rgba(9,14,12,.56);
-      border-color:rgba(80,200,120,.15);
-      border-radius:13px;
-    }
-    .badge{
-      border:1px solid transparent;
-      font-variant-numeric:tabular-nums;
-    }
-    .badge.paid,
-    .paid{
-      background:rgba(80,200,120,.14);
-      border-color:rgba(80,200,120,.24);
-      color:var(--green2);
-    }
-    .badge.unpaid,
-    .unpaid{
-      background:rgba(241,196,83,.13);
-      border-color:rgba(241,196,83,.25);
-      color:var(--yellow);
-    }
-    .paymentBadge.cash,
-    .paymentValue.cash{
-      background:var(--pay-cash-soft);
-      border-color:var(--pay-cash-border);
-      color:var(--pay-cash-text);
-    }
-    .paymentBadge.transfer,
-    .paymentValue.transfer{
-      background:var(--pay-transfer-soft);
-      border-color:var(--pay-transfer-border);
-      color:var(--pay-transfer-text);
-    }
-    .paymentBadge.invoice,
-    .paymentValue.invoice{
-      background:var(--pay-invoice-soft);
-      border-color:var(--pay-invoice-border);
-      color:var(--pay-invoice-text);
-    }
-    .paymentValue.cash,
-    .paymentValue.transfer,
-    .paymentValue.invoice{
-      background:transparent;
-      border-color:transparent;
-    }
-    .barTrack{
-      background:rgba(255,255,255,.065);
-      height:11px;
-    }
-    .barFill{
-      background:linear-gradient(90deg,var(--green),var(--green2));
-    }
-    .barFill.unpaid{
-      background:linear-gradient(90deg,var(--yellow),#f7d77d);
-    }
-    .barFill.cash{background:linear-gradient(90deg,var(--pay-cash),var(--pay-cash-text))}
-    .barFill.transfer{background:linear-gradient(90deg,var(--pay-transfer),var(--pay-transfer-text))}
-    .barFill.invoice{background:linear-gradient(90deg,var(--pay-invoice),var(--pay-invoice-text))}
-    .statsEmpty,
-    .empty{
-      background:rgba(12,18,16,.42);
-      border-color:rgba(166,194,176,.16);
-      color:var(--muted);
-      border-radius:14px;
-    }
-    .tableWrap{
-      border-color:rgba(166,194,176,.14);
-      background:rgba(10,15,13,.46);
-    }
-    th{
-      background:#101813;
-      color:var(--muted);
-    }
-    td{
-      border-bottom-color:rgba(166,194,176,.11);
-    }
-    .toast{
-      background:#eaffef;
-      color:#06100a;
-      box-shadow:0 14px 34px rgba(0,0,0,.34);
-    }
-
-    @media(max-width:430px){
-      .tabs{
-        gap:3px;
-        padding:3px;
-      }
-      .tab{
-        min-height:34px;
-        padding:7px 3px;
-        font-size:11.5px;
-      }
-      .card{
-        padding:10px;
-      }
-      .stats.kpiGrid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-      .chartRow,
-      .paymentRow{
-        grid-template-columns:minmax(52px,auto) minmax(86px,auto) 1fr;
-        gap:7px;
-      }
-      .chartBreakdown{
-        font-size:10px;
-      }
-      .btn.primary{
-        min-height:48px;
-      }
-    }
-    .paymentBreakdown .paymentRow{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) max-content !important;
-      align-items:center;
-    }
-    .paymentBreakdown .paymentLabel{
-      justify-self:start;
-    }
-    .paymentBreakdown .paymentValue{
-      justify-self:end;
-      text-align:right;
-    }
-    .paymentBreakdown .paymentBar{
-      grid-column:1 / -1;
-    }
-  
-  </style>
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0f1412">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b0d">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Доходы PDR">
+  <meta name="apple-mobile-web-app-title" content="PDR Календарь">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-</head>
-<body>
-  <div class="wrap">
-    <div class="tabs">
-      <button class="tab active" data-screen="add">Внести</button>
-      <button class="tab" data-screen="stats">Итоги</button>
-      <button class="tab" data-screen="analytics">Аналитика</button>
-      <button class="tab" data-screen="table">Таблица</button>
-      <button class="tab" data-screen="settings">Сервис</button>
-    </div>
-
-    <section id="screen-add">
-      <div class="grid">
-        <div class="card">
-          <form id="incomeForm">
-            <div class="topInputGrid">
-              <div class="field dateField">
-                <label>Дата</label>
-                <input id="date" type="date" required />
-              </div>
-              <div class="field clientField">
-                <label>Клиент</label>
-                <select id="client" required></select>
-              </div>
-              <div class="quickClients" id="quickClients"></div>
-            </div>
-
-            <div class="paymentStatusRow">
-              <div class="field paymentField">
-                <label>Вид оплаты</label>
-                <div class="paymentButtons" id="paymentButtons">
-                  <button type="button" class="paymentBtn active" data-payment="наличные">Наличные</button>
-                  <button type="button" class="paymentBtn" data-payment="перевод">Перевод</button>
-                  <button type="button" class="paymentBtn" data-payment="счет">Счёт</button>
-                </div>
-              </div>
-
-              <div class="field statusField">
-                <label>Статус</label>
-                <div class="statusButtons" id="statusChips">
-                  <button type="button" class="statusBtn active" data-status="оплачено">Оплачено</button>
-                  <button type="button" class="statusBtn" data-status="не оплачено">Долг</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="carPanel compactCarPanel">
-                <div class="carSvgWrap">
-                  <svg class="car" viewBox="0 0 620 620" role="img" aria-label="Вытянутая схема автомобиля сверху">
-                    <path class="carNose" d="M232 34 Q310 8 388 34" />
-                    <path class="carNose" d="M225 585 Q310 616 395 585" />
-
-                    <rect class="part" data-part="Капот" x="215" y="55" width="190" height="128" rx="30"></rect>
-                    <text class="labelSvg" x="310" y="119">капот</text>
-
-                    <rect class="part" data-part="Крыша" x="220" y="205" width="180" height="180" rx="32"></rect>
-                    <text class="labelSvg" x="310" y="295">крыша</text>
-
-                    <rect class="part" data-part="Крышка багажника" x="210" y="410" width="200" height="130" rx="28"></rect>
-                    <text class="labelSvg" x="310" y="475">багажник</text>
-
-                    <rect class="part" data-part="Крыло переднее левое" x="95" y="80" width="105" height="130" rx="26"></rect>
-                    <text class="labelSvg" x="147" y="145">крыло ПЛ</text>
-
-                    <rect class="part" data-part="Крыло переднее правое" x="420" y="80" width="105" height="130" rx="26"></rect>
-                    <text class="labelSvg" x="472" y="145">крыло ПП</text>
-
-                    <rect class="part" data-part="Дверь передняя левая" x="80" y="230" width="120" height="115" rx="23"></rect>
-                    <text class="labelSvg" x="140" y="287">дверь ПЛ</text>
-
-                    <rect class="part" data-part="Дверь передняя правая" x="420" y="230" width="120" height="115" rx="23"></rect>
-                    <text class="labelSvg" x="480" y="287">дверь ПП</text>
-
-                    <rect class="part" data-part="Дверь задняя левая" x="82" y="365" width="118" height="115" rx="23"></rect>
-                    <text class="labelSvg" x="141" y="422">дверь ЗЛ</text>
-
-                    <rect class="part" data-part="Дверь задняя правая" x="420" y="365" width="118" height="115" rx="23"></rect>
-                    <text class="labelSvg" x="479" y="422">дверь ЗП</text>
-
-                    <rect class="part" data-part="Крыло заднее левое" x="100" y="500" width="100" height="82" rx="24"></rect>
-                    <text class="labelSvg" x="150" y="541">крыло ЗЛ</text>
-
-                    <rect class="part" data-part="Крыло заднее правое" x="420" y="500" width="100" height="82" rx="24"></rect>
-                    <text class="labelSvg" x="470" y="541">крыло ЗП</text>
-
-                    <rect class="part" data-part="Стойка левая" x="202" y="195" width="20" height="295" rx="9"></rect>
-                    <text class="labelSvg" x="212" y="342" transform="rotate(-90 212 342)">стойка Л</text>
-
-                    <rect class="part" data-part="Стойка правая" x="398" y="195" width="20" height="295" rx="9"></rect>
-                    <text class="labelSvg" x="408" y="342" transform="rotate(90 408 342)">стойка П</text>
-
-                    <rect class="part" data-part="Порог левый" x="42" y="220" width="28" height="280" rx="13"></rect>
-                    <text class="labelSvg" x="56" y="360" transform="rotate(-90 56 360)">порог Л</text>
-
-                    <rect class="part" data-part="Порог правый" x="550" y="220" width="28" height="280" rx="13"></rect>
-                    <text class="labelSvg" x="564" y="360" transform="rotate(90 564 360)">порог П</text>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <div class="field selectedField" id="selectedField">
-              <div class="selectedBox" id="selectedElementsBox"></div>
-            </div>
-
-            <div class="vehiclePriceRow">
-              <div class="field carField">
-                <label>Автомобиль</label>
-                <input id="car" type="text" placeholder="Автомобиль" autocomplete="off" />
-              </div>
-
-              <div class="field pricePaymentField">
-                <label>Стоимость</label>
-                <input id="price" type="number" inputmode="numeric" min="0" step="1" placeholder="0" required />
-              </div>
-            </div>
-
-            <div class="stickySave">
-              <button class="btn primary" type="submit">Сохранить</button>
-            </div>
-          </form>
-        </div>
-
-
-      </div>
-    </section>
-
-    <section id="screen-stats" class="hidden">
-      <div class="card">
-        <h2>Итоги</h2>
-        <div class="stats kpiGrid">
-          <div class="stat">
-            <div class="name">Оплачено за текущий месяц</div>
-            <div class="num good" id="periodPaid">0 ₽</div>
-          </div>
-          <div class="stat">
-            <div class="name">Общий долг</div>
-            <div class="num warm" id="periodDebt">0 ₽</div>
-          </div>
-          <div class="stat">
-            <div class="name">Сегодня оплачено</div>
-            <div class="num" id="periodCount">0</div>
-          </div>
-          <div class="stat">
-            <div class="name">Заказов сегодня</div>
-            <div class="num" id="periodAverage">0 ₽</div>
-          </div>
-        </div>
-        <h2 class="statsSectionTitle">Долги</h2>
-        <div class="debtList" id="debtStats"></div>
-      </div>
-    </section>
-
-    <section id="screen-analytics" class="hidden">
-      <div class="card">
-        <h2>Аналитика</h2>
-        <div class="periodButtons" id="analyticsPeriodButtons">
-          <button type="button" class="periodBtn" data-analytics-period="today">Сегодня</button>
-          <button type="button" class="periodBtn" data-analytics-period="week">Неделя</button>
-          <button type="button" class="periodBtn active" data-analytics-period="month">Месяц</button>
-          <button type="button" class="periodBtn" data-analytics-period="all">Все время</button>
-        </div>
-        <div class="stats kpiGrid">
-          <div class="stat">
-            <div class="name">Лучший день</div>
-            <div class="num" id="bestDay">—</div>
-          </div>
-          <div class="stat">
-            <div class="name">Максимум за день</div>
-            <div class="num good" id="bestDaySum">0 ₽</div>
-          </div>
-          <div class="stat">
-            <div class="name">Средний рабочий день</div>
-            <div class="num" id="avgWorkDay">0 ₽</div>
-          </div>
-          <div class="stat">
-            <div class="name">Средний чек</div>
-            <div class="num" id="analyticsAverage">0 ₽</div>
-          </div>
-        </div>
-        <h2 class="statsSectionTitle">Доход по дням</h2>
-        <div class="dailyChart" id="analyticsDailyChart"></div>
-        <h2 class="statsSectionTitle">Топ клиентов</h2>
-        <div class="topClientList" id="analyticsClientStats"></div>
-        <h2 class="statsSectionTitle">Способ оплаты</h2>
-        <div class="paymentBreakdown" id="analyticsPaymentStats"></div>
-      </div>
-    </section>
-
-    <section id="screen-table" class="hidden">
-      <div class="card">
-        <div class="toolbar">
-          <select id="clientFilter">
-            <option value="">Все организации</option>
-          </select>
-          <select id="statusFilter" style="max-width:190px">
-            <option value="">Все статусы</option>
-            <option value="оплачено">Оплачено</option>
-            <option value="не оплачено">Долг</option>
-          </select>
-        </div>
-
-        <div class="filterSummary">
-          <div class="summaryBox">
-            <div class="name">Сумма по фильтру</div>
-            <div class="value" id="filteredTotal">0 ₽</div>
-          </div>
-          <div class="summaryBox">
-            <div class="name">Долг по фильтру</div>
-            <div class="value" id="filteredDebt">0 ₽</div>
-          </div>
-        </div>
-
-        <div class="tableActions">
-          <button class="btn print" id="makePdfBtn">PDF-расшифровка</button>
-          <button class="btn pay" id="markFilteredPaidBtn">Отметить долг оплаченным</button>
-        </div>
-        <div class="tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Дата</th>
-                <th>Клиент</th>
-                <th>Авто</th>
-                <th>Элемент</th>
-                <th>Стоимость</th>
-                <th>Оплата</th>
-                <th>Статус</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="recordsBody"></tbody>
-          </table>
-        </div>
-        <div class="mobileCards" id="recordsCards"></div>
-      </div>
-    </section>
-
-    <section id="screen-settings" class="hidden">
-      <div class="serviceGrid">
-        <div class="card serviceBlock">
-          <h2>Организации</h2>
-          <div class="row" style="grid-template-columns:1fr auto">
-            <input id="newClient" placeholder="Название организации" />
-            <button class="btn" id="addClientBtn">Добавить</button>
-          </div>
-          <div id="clientsList" class="items"></div>
-        </div>
-
-        <div class="card serviceBlock">
-          <h2>Данные</h2>
-          <div class="serviceActions">
-            <button class="btn print" id="downloadBackupBtn">Скачать резервную копию</button>
-            <button class="btn" id="uploadBackupBtn">Загрузить резервную копию</button>
-            <button class="btn" id="exportCsvBtn">Экспорт CSV</button>
-            <input class="fileInputHidden" id="backupFileInput" type="file" accept="application/json,.json" />
-          </div>
-        </div>
-
-        <div class="card serviceBlock">
-          <h2>Опасная зона</h2>
-          <button class="btn danger" id="clearAllBtn">Очистить все записи</button>
-        </div>
-
-      </div>
-    </section>
-  </div>
-
-  <div class="toast" id="toast">Сохранено</div>
-
-<script>
-(() => {
-  const STORAGE_KEY = "pdr_income_mobile_v1";
-
-  const bodyParts = [
-    "Капот", "Крыша", "Крышка багажника",
-    "Крыло переднее левое", "Крыло переднее правое",
-    "Дверь передняя левая", "Дверь передняя правая",
-    "Дверь задняя левая", "Дверь задняя правая",
-    "Крыло заднее левое", "Крыло заднее правое",
-    "Стойка левая", "Стойка правая", "Порог левый", "Порог правый"
-  ];
-
-  const defaults = {
-    clients: ["Частный клиент", "Организация 1", "Организация 2"],
-    extraElements: ["Лючок бензобака", "Арка", "Ребро жесткости"],
-    records: []
-  };
-
-  let state = load();
-  let selectedElements = [];
-  let selectedStatus = "оплачено";
-  let selectedPayment = "наличные";
-  let analyticsPeriod = "month";
-
-  const $ = (id) => document.getElementById(id);
-  const fmt = new Intl.NumberFormat("ru-RU");
-
-  function load(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return structuredClone(defaults);
-      const parsed = JSON.parse(raw);
-      return {
-        clients: parsed.clients?.length ? parsed.clients : defaults.clients,
-        extraElements: Array.isArray(parsed.extraElements) ? parsed.extraElements : defaults.extraElements,
-        records: Array.isArray(parsed.records) ? parsed.records : []
-      };
-    }catch(e){
-      return structuredClone(defaults);
+  <link rel="apple-touch-icon" sizes="192x192" href="./icons/icon-192.png">
+  <title>PDR Календарь</title>
+  <style>
+    :root {
+      --bg: #080b0d;
+      --panel: #121719;
+      --panel-2: #1b2326;
+      --line: rgba(255,255,255,.13);
+      --line-strong: rgba(255,255,255,.24);
+      --text: #f8fbff;
+      --soft: #d7e0e4;
+      --muted: #9aa8ad;
+      --accent: #62e58f;
+      --mobile: #62e58f;
+      --base: #ff756d;
+      --personal: #65b7ff;
+      --warning: #f3c45f;
+      --radius: 20px;
+      --slot-height: 58px;
+      --time-col: 52px;
+      --topbar-height: 118px;
+      --font-display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      --font-text: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      color-scheme: dark;
+      font-family: var(--font-text);
     }
-  }
-
-  function save(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function money(n){
-    return fmt.format(Number(n || 0)) + " ₽";
-  }
-
-  function todayISO(){
-    const d = new Date();
-    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-    return d.toISOString().slice(0,10);
-  }
-
-  function showToast(text="Сохранено"){
-    const t = $("toast");
-    t.textContent = text;
-    t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 1200);
-  }
-
-  function escapeHtml(s){
-    return String(s ?? "").replace(/[&<>"']/g, ch => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[ch]));
-  }
-
-  function paymentClass(method){
-    if(method === "наличные") return "cash";
-    if(method === "перевод") return "transfer";
-    if(method === "счет" || method === "счёт") return "invoice";
-    return "";
-  }
-
-  function topClients(limit = 5){
-    const score = new Map();
-
-    state.clients.forEach(c => score.set(c, {name:c, count:0, last:0, sum:0}));
-
-    state.records.forEach(r => {
-      if(!r.client) return;
-      if(!score.has(r.client)) score.set(r.client, {name:r.client, count:0, last:0, sum:0});
-      const item = score.get(r.client);
-      item.count += 1;
-      item.sum += Number(r.price || 0);
-      item.last = Math.max(item.last, Number(r.id || 0));
-    });
-
-    const rows = [...score.values()]
-      .sort((a,b) => (b.last - a.last) || (b.count - a.count) || a.name.localeCompare(b.name))
-      .slice(0, limit);
-
-    return rows;
-  }
-
-  function renderQuickClients(){
-    const current = $("client").value;
-    const rows = topClients(3);
-
-    $("quickClients").innerHTML = rows.map(c => `
-      <button type="button" class="quickClientBtn ${c.name === current ? "active" : ""}" data-quick-client="${escapeHtml(c.name)}">
-        ${escapeHtml(c.name)}
-      </button>
-    `).join("");
-  }
-
-  function renderClients(){
-    const current = $("client").value;
-    $("client").innerHTML = state.clients.map(c => `<option ${c === current ? "selected" : ""}>${escapeHtml(c)}</option>`).join("");
-    $("clientsList").innerHTML = state.clients.map((c,i) => `
-      <div class="itemLine">
-        <span>${escapeHtml(c)}</span>
-        <button class="btn small danger" data-del-client="${i}">×</button>
-      </div>
-    `).join("");
-    renderQuickClients();
-
-    const currentFilter = $("clientFilter") ? $("clientFilter").value : "";
-    if($("clientFilter")){
-      $("clientFilter").innerHTML = `<option value="">Все организации</option>` + state.clients.map(c => `
-        <option value="${escapeHtml(c)}" ${c === currentFilter ? "selected" : ""}>${escapeHtml(c)}</option>
-      `).join("");
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; background: var(--bg); overscroll-behavior-y: auto; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(98,229,143,.1), transparent 180px),
+        linear-gradient(180deg, #10161a 0%, #080b0d 48%, #050708 100%);
+      overflow-x: hidden;
     }
-  }
+    button, input, textarea { font: inherit; letter-spacing: 0; }
+    button {
+      border: 0;
+      min-height: 44px;
+      border-radius: 15px;
+      padding: 0 14px;
+      color: var(--text);
+      background: rgba(255,255,255,.1);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    button:active { transform: translateY(1px); }
+    .app {
+      width: min(100%, 1040px);
+      margin: 0 auto;
+      padding: max(12px, env(safe-area-inset-top)) 8px calc(18px + env(safe-area-inset-bottom));
+    }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      width: min(100%, 1040px);
+      margin: 0;
+      padding: max(12px, env(safe-area-inset-top)) 12px 12px;
+      background: rgba(8,11,13,.94);
+      backdrop-filter: blur(18px) saturate(1.15);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    }
+    .app::before {
+      content: "";
+      display: block;
+      height: calc(var(--topbar-height) + 12px);
+    }
+    .title-row, .nav-row, .mode-tabs, .sheet-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title-row { justify-content: space-between; margin-bottom: 10px; }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .mark {
+      width: 38px; height: 38px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, #8dffad, #35c56c);
+      color: #031108; font-weight: 780;
+      box-shadow: 0 12px 28px rgba(98,229,143,.28), inset 0 0 0 1px rgba(255,255,255,.34);
+      position: relative;
+    }
+    .mark::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 2px solid #07140c;
+      border-radius: 5px;
+      box-shadow: inset 0 5px 0 rgba(7,20,12,.18);
+    }
+    .mark::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 2px;
+      background: #07140c;
+      top: 15px;
+      border-radius: 2px;
+    }
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.08;
+      letter-spacing: 0;
+      font-weight: 760;
+    }
+    .period-sub { display: none; color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .icon-btn { width: 44px; min-width: 44px; padding: 0; display: grid; place-items: center; font-size: 24px; }
+    .install-btn {
+      display: none;
+      min-height: 38px;
+      padding: 0 12px;
+      border-radius: 13px;
+      background: rgba(98,229,143,.14);
+      color: var(--accent);
+      border: 1px solid rgba(98,229,143,.5);
+      font-weight: 720;
+    }
+    .install-btn.show { display: inline-grid; place-items: center; }
 
-  function renderSelectedElements(){
-    document.querySelectorAll(".part").forEach(p => {
-      p.classList.toggle("selected", selectedElements.includes(p.dataset.part));
-    });
+    .primary { background: var(--accent); color: #031108; font-weight: 760; box-shadow: 0 12px 26px rgba(98,229,143,.18); }
+    .danger { background: rgba(255,117,109,.16); color: #ffd2cf; box-shadow: inset 0 0 0 1px rgba(255,117,109,.24); }
+    .nav-row { justify-content: space-between; }
+    .mode-tabs {
+      flex: 1;
+      min-width: 0;
+      padding: 4px;
+      border-radius: 17px;
+      background: rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+    .mode-tabs button {
+      flex: 1;
+      min-width: 0;
+      min-height: 40px;
+      padding: 0 8px;
+      color: var(--muted);
+      background: transparent;
+      font-weight: 680;
+    }
+    .mode-tabs button.active { color: #031108; background: var(--accent); box-shadow: 0 8px 18px rgba(98,229,143,.16); }
+    .view { display: none; }
+    .view.active { display: block; }
 
-    $("selectedField").classList.toggle("emptySelected", !selectedElements.length);
-
-    if(!selectedElements.length){
-      $("selectedElementsBox").innerHTML = ``;
-      return;
+    .month-weekdays {
+      position: sticky;
+      top: var(--topbar-height);
+      z-index: 22;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      column-gap: 2px;
+      width: 100%;
+      padding: 0;
+      margin: 4px 0 9px;
+      background: rgba(8,11,13,.96);
+      backdrop-filter: blur(14px);
+      color: #c2cbd0;
+      font-size: 11px;
+      text-align: center;
+      font-weight: 650;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+    }
+    .month-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 0;
+    }
+    .month-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 0;
+    }
+    .month-divider {
+      color: var(--soft);
+      font-size: 30px;
+      font-family: var(--font-display);
+      font-weight: 740;
+      letter-spacing: 0;
+      line-height: 1;
+      text-align: center;
+      padding: 12px 2px 0;
+      border-top: 1px solid var(--line);
+      min-height: 34px;
+    }
+    .month-week {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      column-gap: 2px;
+      width: 100%;
+      height: 230px;
+      min-height: 230px;
+    }
+    .month-day {
+      min-width: 0;
+      height: 230px;
+      min-height: 230px;
+      border: 0;
+      border-radius: 0;
+      background: rgba(255,255,255,.015);
+      padding: 2px;
+      overflow: hidden;
+      touch-action: pan-y;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      box-shadow: inset -1px 0 0 rgba(255,255,255,.035), inset 0 -1px 0 rgba(255,255,255,.035);
+    }
+    .month-day.outside { opacity: .46; background: rgba(255,255,255,.006); }
+    .month-day.ghost-cell {
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .month-day.drop-target, .grid-cell.drop-target {
+      outline: 2px solid rgba(98,229,143,.75);
+      background: rgba(98,229,143,.12);
+    }
+    .day-num {
+      flex: 0 0 auto;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 680;
+      margin: 0 0 4px;
+      padding: 0;
+    }
+    .day-num-inner {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      border: 1px solid transparent;
+      border-radius: 999px;
+    }
+    .day-num-inner.today,
+    .day-num-inner.selected {
+      border-color: rgba(98,229,143,.85);
+      color: #031108;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(98,229,143,.13);
+    }
+    .day-items {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 3px;
+    }
+    .entry-chip {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 3px;
+      width: 100%;
+      min-width: 0;
+      min-height: 54px;
+      height: auto;
+      padding: 4px 4px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(98,229,143,.38);
+      background: rgba(98,229,143,.18);
+      color: #c9ffd9;
+      overflow: visible;
+      box-sizing: border-box;
+      font-family: var(--font-text);
+      touch-action: pan-y;
+      user-select: none;
+      box-shadow: 0 6px 14px rgba(0,0,0,.2), inset 3px 0 0 var(--mobile);
+    }
+    .entry-chip.base { border-color: rgba(255,117,109,.4); background: rgba(255,117,109,.18); color: #ffd5d2; box-shadow: 0 6px 14px rgba(0,0,0,.2), inset 3px 0 0 var(--base); }
+    .entry-chip.personal { border-color: rgba(101,183,255,.42); background: rgba(101,183,255,.18); color: #d5ecff; box-shadow: 0 6px 14px rgba(0,0,0,.2), inset 3px 0 0 var(--personal); }
+    .entry-chip.all-day { flex: 0 0 auto; min-height: 50px; background: rgba(98,229,143,.28); }
+    .entry-chip.base.all-day { background: rgba(255,117,109,.28); }
+    .entry-chip.personal.all-day { background: rgba(101,183,255,.28); }
+    .entry-chip.all-day {
+      box-shadow: 0 8px 18px rgba(0,0,0,.22), inset 0 0 0 1px currentColor;
+      background-image: linear-gradient(135deg, rgba(255,255,255,.16), transparent 42%);
+    }
+    .entry-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 10.5px;
+      line-height: 1.24;
+      font-weight: 680;
+      color: currentColor;
+      white-space: normal;
+      word-break: normal;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      padding-bottom: 1px;
+    }
+    .entry-time {
+      font-size: 9.5px;
+      line-height: 1.25;
+      opacity: .9;
+      color: currentColor;
+      margin-top: 2px;
+      padding-bottom: 1px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .entry-chip.dragging { opacity: .55; }
+    .dragging { opacity: .35; }
+    .drag-ghost {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 9999;
+      pointer-events: none;
+      width: 132px;
+      min-height: 44px;
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(98,229,143,.46);
+      background: rgba(98,229,143,.24);
+      color: #c9ffd9;
+      opacity: .95;
+      transform: translate(-50%, -50%) scale(1.03);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      overflow: hidden;
+      font-family: var(--font-text);
+    }
+    .drag-ghost.base { border-color: rgba(255,117,109,.48); background: rgba(255,117,109,.24); color: #ffd5d2; }
+    .drag-ghost.personal { border-color: rgba(101,183,255,.5); background: rgba(101,183,255,.24); color: #d5ecff; }
+    .drag-ghost.all-day { background: rgba(98,229,143,.34); }
+    .drag-ghost.base.all-day { background: rgba(255,117,109,.34); }
+    .drag-ghost.personal.all-day { background: rgba(101,183,255,.34); }
+    .drag-ghost-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 11px;
+      line-height: 1.1;
+      font-weight: 680;
+    }
+    .drag-ghost-time {
+      margin-top: 4px;
+      font-size: 10px;
+      line-height: 1;
+      opacity: .85;
+    }
+    .more {
+      flex: 0 0 auto;
+      color: #b8c5ca;
+      font-size: 10px;
+      line-height: 14px;
+      margin: 0 2px;
+      font-weight: 620;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    $("selectedElementsBox").innerHTML = `
-      <div class="chips">
-        ${selectedElements.map(el => `
-          <button type="button" class="chip active" data-remove-selected="${escapeHtml(el)}">${escapeHtml(el)} ×</button>
-        `).join("")}
-      </div>
-    `;
-  }
-
-  function renderExtraElements(){
-    if(!$("elementsList")) return;
-    $("elementsList").innerHTML = state.extraElements.map((el,i) => `
-      <div class="itemLine">
-        <span>${escapeHtml(el)}</span>
-        <div style="display:flex;gap:6px">
-          <button class="btn small" data-add-extra="${escapeHtml(el)}">Выбрать</button>
-          <button class="btn small danger" data-del-element="${i}">×</button>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function renderPayment(){
-    document.querySelectorAll(".paymentBtn").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.payment === selectedPayment);
-    });
-  }
-
-  function parseISODate(dateString){
-    if(!dateString) return null;
-    const [y,m,d] = dateString.split("-").map(Number);
-    if(!y || !m || !d) return null;
-    return new Date(y, m - 1, d);
-  }
-
-  function dateToISO(date){
-    const d = new Date(date);
-    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-    return d.toISOString().slice(0,10);
-  }
-
-  function statsPeriodRange(period = analyticsPeriod){
-    const today = parseISODate(todayISO());
-    const end = dateToISO(today);
-    if(period === "all") return {from:"", to:"", label:"Все время"};
-    if(period === "today") return {from:end, to:end, label:"Сегодня"};
-    const start = new Date(today);
-    if(period === "week"){
-      const day = start.getDay() || 7;
-      start.setDate(start.getDate() - day + 1);
-      return {from:dateToISO(start), to:end, label:"Неделя"};
+    .schedule {
+      position: relative;
+      min-height: calc(20 * var(--slot-height));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(255,255,255,.025);
+      display: grid;
+      grid-template-columns: var(--time-col) 1fr;
+      grid-template-rows: repeat(20, var(--slot-height));
     }
-    start.setDate(1);
-    return {from:dateToISO(start), to:end, label:"Месяц"};
-  }
-
-  function isInRange(record, range, period = analyticsPeriod){
-    if(!record.date) return period === "all";
-    if(range.from && record.date < range.from) return false;
-    if(range.to && record.date > range.to) return false;
-    return true;
-  }
-
-  function getRowsForPeriod(period){
-    const range = statsPeriodRange(period);
-    return state.records.filter(r => isInRange(r, range, period));
-  }
-
-  function renderPeriodButtons(containerId, attr, value){
-    document.querySelectorAll(`#${containerId} [${attr}]`).forEach(btn => {
-      btn.classList.toggle("active", btn.getAttribute(attr) === value);
-    });
-  }
-
-  function debtByClient(rows){
-    const map = new Map();
-    rows.filter(r => r.status === "не оплачено").forEach(r => {
-      const name = r.client || "Без организации";
-      if(!map.has(name)) map.set(name, {name, sum:0, count:0, ids:[]});
-      const item = map.get(name);
-      item.sum += Number(r.price || 0);
-      item.count += 1;
-      item.ids.push(r.id);
-    });
-    return [...map.values()].sort((a,b) => b.sum - a.sum || a.name.localeCompare(b.name));
-  }
-
-  function topClientsForRows(rows, limit = 5){
-    const map = new Map();
-    rows.forEach(r => {
-      const name = r.client || "Без организации";
-      if(!map.has(name)) map.set(name, {name, sum:0, count:0, debt:0});
-      const item = map.get(name);
-      item.sum += Number(r.price || 0);
-      item.count += 1;
-      if(r.status === "не оплачено") item.debt += Number(r.price || 0);
-    });
-    return [...map.values()]
-      .sort((a,b) => b.sum - a.sum || b.count - a.count || a.name.localeCompare(b.name))
-      .slice(0, limit);
-  }
-
-  function daysBetween(from, to){
-    const days = [];
-    const start = parseISODate(from);
-    const end = parseISODate(to);
-    if(!start || !end) return days;
-    for(let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)){
-      days.push(dateToISO(d));
+    .time-cell {
+      color: #b2c0c5;
+      font-size: 11px;
+      padding: 7px 0 0 3px;
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      background: rgba(0,0,0,.1);
     }
-    return days;
-  }
-
-  function dailyPaidRows(rows, period){
-    const totals = new Map();
-    rows.forEach(r => {
-      if(!r.date) return;
-      if(!totals.has(r.date)) totals.set(r.date, {date:r.date, paidSum:0, unpaidSum:0, totalSum:0});
-      const item = totals.get(r.date);
-      const price = Number(r.price || 0);
-      item.totalSum += price;
-      if(r.status === "оплачено"){
-        item.paidSum += price;
-      }else if(r.status === "не оплачено"){
-        item.unpaidSum += price;
-      }
-    });
-
-    return [...totals.values()]
-      .filter(day => day.totalSum > 0)
-      .sort((a,b) => a.date.localeCompare(b.date));
-  }
-
-  function renderDailyChart(rows, targetId, period){
-    const days = dailyPaidRows(rows, period);
-    const max = Math.max(0, ...days.map(d => d.totalSum));
-    $(targetId).innerHTML = days.length
-      ? days.map(day => {
-        const pct = max ? Math.round(day.totalSum / max * 100) : 0;
-        const isMixed = day.paidSum > 0 && day.unpaidSum > 0;
-        const valueClass = isMixed ? "mixed" : (day.unpaidSum > 0 ? "unpaid" : "paid");
-        const fillClass = day.unpaidSum > 0 ? "unpaid" : "";
-        const breakdown = isMixed
-          ? `<div class="chartBreakdown"><span class="paidPart">опл. ${money(day.paidSum)}</span> / <span class="unpaidPart">долг ${money(day.unpaidSum)}</span></div>`
-          : "";
-        return `
-          <div class="chartRow">
-            <div>${ruDate(day.date)}</div>
-            <div>
-              <div class="chartValue ${valueClass}">${money(day.totalSum)}</div>
-              ${breakdown}
-            </div>
-            <div class="barTrack"><div class="barFill ${fillClass}" style="width:${pct}%"></div></div>
-          </div>
-        `;
-      }).join("")
-      : `<div class="statsEmpty">За выбранный период заказов нет</div>`;
-  }
-
-  function renderPaymentStats(rows, targetId){
-    const labels = [
-      {key:"наличные", label:"Наличные", cls:"cash"},
-      {key:"перевод", label:"Перевод", cls:"transfer"},
-      {key:"счет", label:"Счёт", cls:"invoice"}
-    ];
-    const totals = new Map(labels.map(item => [item.key, 0]));
-    rows.filter(r => r.status === "оплачено").forEach(r => {
-      const key = r.paymentMethod || "";
-      if(totals.has(key)) totals.set(key, totals.get(key) + Number(r.price || 0));
-    });
-    const max = Math.max(0, ...labels.map(item => totals.get(item.key)));
-    $(targetId).innerHTML = labels.map(item => {
-      const sum = totals.get(item.key) || 0;
-      const pct = max ? Math.round(sum / max * 100) : 0;
-      return `
-        <div class="paymentRow">
-          <div class="paymentLabel">${item.label}</div>
-          <div class="paymentValue ${item.cls}">${money(sum)}</div>
-          <div class="barTrack paymentBar"><div class="barFill ${sum ? item.cls : "empty"}" style="width:${pct}%"></div></div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function renderStats(){
-    const today = todayISO();
-    const currentMonth = today.slice(0,7);
-    const monthPaid = state.records
-      .filter(r => r.date?.startsWith(currentMonth) && r.status === "оплачено")
-      .reduce((s,r) => s + Number(r.price || 0), 0);
-    const totalDebt = state.records
-      .filter(r => r.status === "не оплачено")
-      .reduce((s,r) => s + Number(r.price || 0), 0);
-    const todayPaid = state.records
-      .filter(r => r.date === today && r.status === "оплачено")
-      .reduce((s,r) => s + Number(r.price || 0), 0);
-    const todayCount = state.records.filter(r => r.date === today).length;
-
-    $("periodPaid").textContent = money(monthPaid);
-    $("periodDebt").textContent = money(totalDebt);
-    $("periodCount").textContent = money(todayPaid);
-    $("periodAverage").textContent = String(todayCount);
-
-    const debts = debtByClient(state.records);
-    $("debtStats").innerHTML = debts.length
-      ? debts.map(item => `
-        <div class="debtOrgCard">
-          <div class="debtOrgTop">
-            <div class="debtOrgName">${escapeHtml(item.name)}</div>
-            <div class="debtAmount">${money(item.sum)}</div>
-          </div>
-          <div class="debtActions">
-            <button class="btn small print" data-debt-pdf="${escapeHtml(item.name)}">PDF</button>
-            <button class="btn small pay" data-debt-paid="${escapeHtml(item.name)}">Оплачено</button>
-          </div>
-        </div>
-      `).join("")
-      : `<div class="statsEmpty">Долгов нет</div>`;
-
-  }
-
-  function renderTopClients(rows, targetId){
-    const topRows = topClientsForRows(rows, 5);
-    $(targetId).innerHTML = topRows.length
-      ? topRows.map(item => `
-        <div class="topClientCard">
-          <div class="topClientTop">
-            <div class="topClientName">${escapeHtml(item.name)}</div>
-            <div class="topClientAmount">${money(item.sum)}</div>
-          </div>
-          <div class="topClientMeta">
-            ${item.count} заказ(ов) · долг ${money(item.debt)}
-          </div>
-        </div>
-      `).join("")
-      : `<div class="statsEmpty">За выбранный период заказов нет</div>`;
-  }
-
-  function renderAnalytics(){
-    const rows = getRowsForPeriod(analyticsPeriod);
-    const days = dailyPaidRows(rows, analyticsPeriod);
-    const best = days.slice().sort((a,b) => b.totalSum - a.totalSum || a.date.localeCompare(b.date))[0];
-    const workTotal = days.reduce((s,d) => s + d.totalSum, 0);
-    const total = rows.reduce((s,r) => s + Number(r.price || 0), 0);
-
-    renderPeriodButtons("analyticsPeriodButtons", "data-analytics-period", analyticsPeriod);
-    $("bestDay").textContent = days.length ? ruDate(best.date) : "—";
-    $("bestDaySum").textContent = money(days.length ? best.totalSum : 0);
-    $("bestDaySum").classList.toggle("warm", !!best?.unpaidSum);
-    $("avgWorkDay").textContent = money(days.length ? Math.round(workTotal / days.length) : 0);
-    $("analyticsAverage").textContent = money(rows.length ? Math.round(total / rows.length) : 0);
-    renderDailyChart(rows, "analyticsDailyChart", analyticsPeriod);
-    renderTopClients(rows, "analyticsClientStats");
-    renderPaymentStats(rows, "analyticsPaymentStats");
-  }
-
-  function getFilteredRows(){
-    const status = $("statusFilter").value;
-    const client = $("clientFilter") ? $("clientFilter").value : "";
-
-    let rows = [...state.records].sort((a,b) => (b.date || "").localeCompare(a.date || "") || b.id - a.id);
-
-    if(client){
-      rows = rows.filter(r => r.client === client);
+    .grid-cell {
+      border-left: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      min-width: 0;
+      touch-action: none;
     }
-
-    if(status){
-      rows = rows.filter(r => r.status === status);
+    .time-card {
+      position: absolute;
+      left: calc(var(--time-col) + 6px);
+      right: 7px;
+      z-index: 5;
+      min-height: 48px;
+      border-radius: 10px;
+      border: 1px solid rgba(98,229,143,.42);
+      background: rgba(98,229,143,.2);
+      box-shadow: 0 12px 24px rgba(0,0,0,.28), inset 4px 0 0 var(--mobile);
+      padding: 8px 10px;
+      overflow: hidden;
+      touch-action: pan-y;
+      user-select: none;
     }
-
-    return rows;
-  }
-
-  function filteredTotals(rows){
-    return {
-      total: rows.reduce((s,r) => s + Number(r.price || 0), 0),
-      debt: rows.filter(r => r.status === "не оплачено").reduce((s,r) => s + Number(r.price || 0), 0),
-      unpaidCount: rows.filter(r => r.status === "не оплачено").length
-    };
-  }
-
-  function renderTable(){
-    const rows = getFilteredRows();
-    const totals = filteredTotals(rows);
-
-    if($("filteredTotal")) $("filteredTotal").textContent = money(totals.total);
-    if($("filteredDebt")) $("filteredDebt").textContent = money(totals.debt);
-    if($("markFilteredPaidBtn")){
-      $("markFilteredPaidBtn").disabled = totals.unpaidCount === 0;
-      $("markFilteredPaidBtn").textContent = totals.unpaidCount
-        ? `Отметить долг оплаченным (${totals.unpaidCount})`
-        : "Нет неоплаченных";
+    .time-card.base { border-color: rgba(255,117,109,.44); background: rgba(255,117,109,.2); color: #ffd5d2; box-shadow: 0 12px 24px rgba(0,0,0,.28), inset 4px 0 0 var(--base); }
+    .time-card.personal { border-color: rgba(101,183,255,.46); background: rgba(101,183,255,.2); color: #d5ecff; box-shadow: 0 12px 24px rgba(0,0,0,.28), inset 4px 0 0 var(--personal); }
+    .time-card .time { color: currentColor; font-size: 11px; font-weight: 680; opacity: .9; }
+    .time-card .name { color: currentColor; font-size: 14px; font-weight: 720; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0; }
+    .time-card .meta { color: var(--soft); font-size: 11px; opacity: .92; }
+    .all-day-row { display: grid; gap: 7px; margin-bottom: 10px; }
+    .all-day-card {
+      display: grid;
+      gap: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(98,229,143,.48);
+      background: rgba(98,229,143,.28);
+      background-image: linear-gradient(135deg, rgba(255,255,255,.16), transparent 45%);
+      box-shadow: 0 10px 24px rgba(0,0,0,.24), inset 4px 0 0 var(--mobile);
+      padding: 11px 12px;
+      font-weight: 720;
+      touch-action: pan-y;
     }
-
-    if(!rows.length){
-      $("recordsBody").innerHTML = `<tr><td colspan="8" class="empty">Записей пока нет</td></tr>`;
-      $("recordsCards").innerHTML = `<div class="empty">Записей пока нет</div>`;
-      return;
+    .all-day-card small {
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1;
+      opacity: .86;
     }
+    .all-day-card.base { border-color: rgba(255,117,109,.48); background-color: rgba(255,117,109,.28); color: #ffd5d2; box-shadow: 0 10px 24px rgba(0,0,0,.24), inset 4px 0 0 var(--base); }
+    .all-day-card.personal { border-color: rgba(101,183,255,.5); background-color: rgba(101,183,255,.28); color: #d5ecff; box-shadow: 0 10px 24px rgba(0,0,0,.24), inset 4px 0 0 var(--personal); }
 
-    $("recordsBody").innerHTML = rows.map(r => `
-      <tr>
-        <td>${escapeHtml(r.date || "")}</td>
-        <td>${escapeHtml(r.client || "")}</td>
-        <td>${escapeHtml(r.car || "")}</td>
-        <td>${escapeHtml((r.elements || []).join(", "))}</td>
-        <td><b>${money(r.price)}</b></td>
-        <td><span class="badge paymentBadge ${paymentClass(r.paymentMethod)}">${escapeHtml(r.paymentMethod || "")}</span></td>
-        <td><span class="badge ${r.status === "оплачено" ? "paid" : "unpaid"}">${escapeHtml(r.status || "")}</span></td>
-        <td><button class="btn small danger" data-del-record="${r.id}">Удалить</button></td>
-      </tr>
-    `).join("");
-
-    $("recordsCards").innerHTML = rows.map(r => `
-      <div class="recordCard">
-        <div class="recordTop">
-          <div>
-            <div class="recordTitle">${escapeHtml(r.client || "")}</div>
-            <div class="recordMeta">${escapeHtml(r.date || "")}${r.car ? " · " + escapeHtml(r.car) : ""}</div>
-          </div>
-          <div class="recordPrice">${money(r.price)}</div>
-        </div>
-        <span class="badge ${r.status === "оплачено" ? "paid" : "unpaid"}">${escapeHtml(r.status || "")}</span>
-        <span class="badge paymentBadge ${paymentClass(r.paymentMethod)}" style="margin-left:5px">${escapeHtml(r.paymentMethod || "")}</span>
-        <div class="recordLine"><b>Элементы:</b> ${escapeHtml((r.elements || []).join(", "))}</div>
-        <div style="margin-top:10px">
-          <button class="btn small danger" data-del-record="${r.id}">Удалить</button>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function renderAll(){
-    renderClients();
-    renderSelectedElements();
-    renderExtraElements();
-    renderPayment();
-    renderStats();
-    renderAnalytics();
-    renderTable();
-    save();
-  }
-
-  $("date").value = todayISO();
-
-  document.querySelectorAll(".tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      ["add","stats","analytics","table","settings"].forEach(s => $("screen-" + s).classList.add("hidden"));
-      $("screen-" + btn.dataset.screen).classList.remove("hidden");
-      renderAll();
-    });
-  });
-
-  document.querySelector(".car").addEventListener("click", e => {
-    const part = e.target.closest(".part");
-    if(!part) return;
-
-    const name = part.dataset.part;
-    if(selectedElements.includes(name)){
-      selectedElements = selectedElements.filter(x => x !== name);
-    }else{
-      selectedElements.push(name);
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(0,0,0,.72);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease;
     }
-    renderSelectedElements();
-  });
-
-  $("selectedElementsBox").addEventListener("click", e => {
-    const btn = e.target.closest("[data-remove-selected]");
-    if(!btn) return;
-    const name = btn.dataset.removeSelected;
-    selectedElements = selectedElements.filter(x => x !== name);
-    renderSelectedElements();
-  });
-
-  $("paymentButtons").addEventListener("click", e => {
-    const btn = e.target.closest("[data-payment]");
-    if(!btn) return;
-    selectedPayment = btn.dataset.payment;
-    renderPayment();
-  });
-
-  $("statusChips").addEventListener("click", e => {
-    const btn = e.target.closest("[data-status]");
-    if(!btn) return;
-    selectedStatus = btn.dataset.status;
-    document.querySelectorAll(".statusBtn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  });
-
-  $("incomeForm").addEventListener("submit", e => {
-    e.preventDefault();
-
-    if(!selectedElements.length){
-      showToast("Выбери хотя бы один элемент");
-      return;
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .sheet {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      z-index: 90;
+      width: min(100%, 620px);
+      max-height: min(91vh, 860px);
+      transform: translate(-50%, 105%);
+      transition: transform .22s ease;
+      border: 1px solid rgba(255,255,255,.18);
+      border-bottom: 0;
+      border-radius: 24px 24px 0 0;
+      background: #111719;
+      box-shadow: 0 -28px 80px rgba(0,0,0,.72);
+      overflow: hidden;
     }
-
-    const record = {
-      id: Date.now(),
-      date: $("date").value || todayISO(),
-      client: $("client").value,
-      car: $("car").value.trim(),
-      elements: selectedElements,
-      price: Number($("price").value || 0),
-      paymentMethod: selectedPayment,
-      status: selectedStatus
-    };
-
-    state.records.push(record);
-    save();
-
-    $("car").value = "";
-    $("price").value = "";
-    selectedElements = [];
-    selectedStatus = "оплачено";
-    selectedPayment = "наличные";
-    document.querySelectorAll(".statusBtn").forEach(b => b.classList.toggle("active", b.dataset.status === selectedStatus));
-
-    renderAll();
-    showToast("Доход сохранен");
-  });
-
-  $("addClientBtn").addEventListener("click", () => {
-    const val = $("newClient").value.trim();
-    if(!val) return;
-    if(!state.clients.includes(val)) state.clients.push(val);
-    $("newClient").value = "";
-    renderAll();
-    showToast("Организация добавлена");
-  });
-
-  $("client").addEventListener("change", renderQuickClients);
-
-  $("analyticsPeriodButtons").addEventListener("click", e => {
-    const btn = e.target.closest("[data-analytics-period]");
-    if(!btn) return;
-    analyticsPeriod = btn.dataset.analyticsPeriod;
-    renderAnalytics();
-  });
-
-  $("quickClients").addEventListener("click", e => {
-    const btn = e.target.closest("[data-quick-client]");
-    if(!btn) return;
-    $("client").value = btn.dataset.quickClient;
-    renderQuickClients();
-
-    const currentFilter = $("clientFilter") ? $("clientFilter").value : "";
-    if($("clientFilter")){
-      $("clientFilter").innerHTML = `<option value="">Все организации</option>` + state.clients.map(c => `
-        <option value="${escapeHtml(c)}" ${c === currentFilter ? "selected" : ""}>${escapeHtml(c)}</option>
-      `).join("");
+    .sheet.open { transform: translate(-50%, 0); }
+    .sheet-head {
+      position: sticky;
+      top: 0;
+      justify-content: space-between;
+      z-index: 2;
+      padding: 12px 14px;
+      background: rgba(17,23,25,.98);
+      border-bottom: 1px solid var(--line-strong);
     }
-  });
-
-  if($("addElementBtn")){
-    $("addElementBtn").addEventListener("click", () => {
-      const val = $("newElement").value.trim();
-      if(!val) return;
-      if(!state.extraElements.includes(val)) state.extraElements.push(val);
-      $("newElement").value = "";
-      renderAll();
-      showToast("Элемент добавлен");
-    });
-  }
-
-  $("downloadBackupBtn").addEventListener("click", downloadBackup);
-  $("uploadBackupBtn").addEventListener("click", () => $("backupFileInput").click());
-  $("backupFileInput").addEventListener("change", e => {
-    importBackupFile(e.target.files[0]);
-    e.target.value = "";
-  });
-  $("exportCsvBtn").addEventListener("click", exportCsv);
-
-  document.body.addEventListener("click", e => {
-    const debtPdf = e.target.closest("[data-debt-pdf]");
-    if(debtPdf){
-      makeDebtPdf(debtPdf.dataset.debtPdf);
-      return;
+    .sheet h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 18px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      font-weight: 740;
     }
-
-    const debtPaid = e.target.closest("[data-debt-paid]");
-    if(debtPaid){
-      markClientDebtPaid(debtPaid.dataset.debtPaid);
-      return;
+    .sheet-body {
+      max-height: calc(min(91vh, 860px) - 65px);
+      overflow: auto;
+      padding: 12px 12px calc(14px + env(safe-area-inset-bottom));
     }
-
-    const dc = e.target.closest("[data-del-client]");
-    if(dc){
-      const i = Number(dc.dataset.delClient);
-      if(state.clients.length <= 1){
-        showToast("Нужен хотя бы один клиент");
-        return;
-      }
-      state.clients.splice(i,1);
-      renderAll();
-      return;
+    .field { margin-bottom: 9px; }
+    label { display: block; margin: 0 0 5px 3px; color: #bbc6ca; font-size: 12px; font-weight: 640; }
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 16px;
+      padding: 11px 13px;
+      outline: none;
+      color: var(--text);
+      background: rgba(255,255,255,.08);
     }
-
-    const de = e.target.closest("[data-del-element]");
-    if(de){
-      const i = Number(de.dataset.delElement);
-      state.extraElements.splice(i,1);
-      selectedElements = selectedElements.filter(x => bodyParts.includes(x) || state.extraElements.includes(x));
-      renderAll();
-      return;
+    input { min-height: 44px; }
+    textarea {
+      min-height: 78px;
+      resize: vertical;
+      line-height: 1.35;
     }
-
-    const ae = e.target.closest("[data-add-extra]");
-    if(ae){
-      const name = ae.dataset.addExtra;
-      if(!selectedElements.includes(name)) selectedElements.push(name);
-      document.querySelector('[data-screen="add"]').click();
-      renderAll();
-      return;
+    input:focus, textarea:focus { border-color: rgba(98,229,143,.72); box-shadow: 0 0 0 3px rgba(98,229,143,.12); }
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
     }
-
-    const dr = e.target.closest("[data-del-record]");
-    if(dr){
-      const id = Number(dr.dataset.delRecord);
-      state.records = state.records.filter(r => r.id !== id);
-      renderAll();
-      showToast("Запись удалена");
+    .type-grid button {
+      min-height: 40px;
+      padding: 0 8px;
+      color: #c1ccd0;
+      font-weight: 680;
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
     }
-  });
-
-  $("statusFilter").addEventListener("change", renderTable);
-  $("clientFilter").addEventListener("change", renderTable);
-
-  function ruDate(dateString){
-    if(!dateString) return "";
-    const [y,m,d] = dateString.split("-");
-    return `${d}.${m}.${y}`;
-  }
-
-  function reportPeriod(rows){
-    const dates = rows.map(r => r.date).filter(Boolean).sort();
-    if(!dates.length) return {from:"", to:"", title:"Детализация по работам"};
-    return {
-      from: dates[0],
-      to: dates[dates.length - 1],
-      title: `Детализация по работам с ${ruDate(dates[0])} по ${ruDate(dates[dates.length - 1])}`
-    };
-  }
-
-  function writePdfReport(rows, client, status, clientLabel = "Организация"){
-    const period = reportPeriod(rows);
-    const total = rows.reduce((s,r) => s + Number(r.price || 0), 0);
-    const tableRows = rows
-      .slice()
-      .sort((a,b) => (a.date || "").localeCompare(b.date || "") || a.id - b.id)
-      .map(r => `
-        <tr>
-          <td>${escapeHtml(ruDate(r.date))}</td>
-          <td>${escapeHtml(r.client || "")}</td>
-          <td>${escapeHtml(r.car || "")}</td>
-          <td>${escapeHtml((r.elements || []).join(", "))}</td>
-          <td class="money">${money(r.price)}</td>
-        </tr>
-      `).join("");
-
-    const doc = window.open("", "_blank");
-    if(!doc){
-      showToast("Браузер заблокировал окно");
-      return;
+    .type-grid button.active {
+      color: #07140c;
+      background: var(--accent);
+      box-shadow: 0 8px 18px rgba(98,229,143,.16);
     }
-
-    doc.document.write(`<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<title>Доходы PDR S23 Plus</title>
-<style>
-  @page { size: A4; margin: 14mm; }
-  *{box-sizing:border-box}
-  body{font-family:Arial, sans-serif;color:#111;margin:0;font-size:12px}
-  h1{font-size:18px;margin:0 0 6px}
-  .meta{font-size:11px;color:#555;margin-bottom:14px;line-height:1.35}
-  table{width:100%;border-collapse:collapse}
-  th,td{border:1px solid #bbb;padding:6px;vertical-align:top}
-  th{background:#f0f0f0;text-align:left}
-  .money{text-align:right;white-space:nowrap}
-  .total{margin-top:12px;text-align:right;font-size:15px;font-weight:bold}
-  .footer{margin-top:18px;color:#777;font-size:10px}
-
+    .type-grid button[data-type="base"].active { background: var(--base); color: #230606; }
+    .type-grid button[data-type="personal"].active { background: var(--personal); color: #06121f; }
+    .time-wheel-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .time-wheel-col {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+    .time-wheel-title {
+      color: #b8c5ca;
+      font-size: 11px;
+      font-weight: 680;
+      text-align: center;
+    }
+    .time-wheel {
+      height: 112px;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        linear-gradient(180deg, rgba(21,26,24,.92), rgba(21,26,24,0) 35%, rgba(21,26,24,0) 65%, rgba(21,26,24,.92)),
+        rgba(255,255,255,.08);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .time-wheel::-webkit-scrollbar { display: none; }
+    .time-option {
+      height: 40px;
+      display: grid;
+      place-items: center;
+      scroll-snap-align: center;
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 680;
+    }
+    .time-option.active {
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 780;
+    }
+    .time-option.spacer { pointer-events: none; }
+    .sheet-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .sheet-actions button { min-height: 46px; font-weight: 740; }
+    @media (max-width: 520px) {
+      .month-weekdays { column-gap: 2px; }
+      .month-grid { gap: 14px; }
+      .month-section { gap: 10px; padding-top: 0; }
+      .month-divider { font-size: 28px; padding-top: 10px; min-height: 34px; }
+      .month-week { column-gap: 2px; height: 230px; min-height: 230px; }
+      .month-day { height: 230px; min-height: 230px; padding: 1px; border-radius: 0; }
+      .entry-chip { height: auto; min-height: 54px; padding: 4px 4px 6px; border-radius: 6px; }
+      .entry-title { font-size: 10.5px; line-height: 1.24; padding-bottom: 1px; }
+      .entry-time { font-size: 9.5px; line-height: 1.25; }
+      .day-num { height: 22px; font-size: 16px; margin-bottom: 4px; }
+      .day-num-inner { width: 22px; height: 22px; }
+      .mode-tabs button { font-size: 13px; }
+      .type-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .sheet-actions { grid-template-columns: 1fr; }
+      :root { --slot-height: 55px; --time-col: 46px; }
+    }
+    @media (min-width: 760px) {
+      .month-week { height: 240px; min-height: 240px; }
+      .month-day { height: 240px; min-height: 240px; }
+      .app { padding-left: 22px; padding-right: 22px; }
+      .topbar { padding-left: 22px; padding-right: 22px; }
+    }
   </style>
 </head>
 <body>
-  <h1>${escapeHtml(period.title)}</h1>
-  <div class="meta">
-    ${escapeHtml(clientLabel)}: ${escapeHtml(client)}<br>
-    Статус: ${escapeHtml(status)}
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Дата</th>
-        <th>Клиент</th>
-        <th>Автомобиль</th>
-        <th>Элемент</th>
-        <th>Стоимость</th>
-      </tr>
-    </thead>
-    <tbody>${tableRows}</tbody>
-  </table>
-  <div class="total">Итого: ${money(total)}</div>
-  <div class="footer">Сформировано из локального учета доходов PDR</div>
-<script>
-  window.onload = () => {
-    setTimeout(() => window.print(), 250);
-  };
-<\/script>
-</body>
-</html>`);
-    doc.document.close();
-  }
+  <main class="app">
+    <header class="topbar">
+      <div class="title-row">
+        <div class="brand">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <h1 id="periodTitle">Май 2026</h1>
+            <div class="period-sub" id="periodSub">Календарь мастера</div>
+          </div>
+        </div>
+        <button class="install-btn" id="installBtn" type="button">Установить</button>
+        <button class="icon-btn" id="resetBtn" title="Сбросить демо">↺</button>
+      </div>
+      <div class="nav-row">
+        <button class="icon-btn" id="prevBtn" title="Назад">‹</button>
+        <div class="mode-tabs">
+          <button class="active" data-view="month">Месяц</button>
+          <button data-view="day">День</button>
+        </div>
+        <button class="icon-btn" id="nextBtn" title="Вперёд">›</button>
+      </div>
+    </header>
 
-  function makePdfReport(){
-    const rows = getFilteredRows();
-    if(!rows.length){
-      showToast("Нет заказов для отчета");
-      return;
-    }
-    writePdfReport(
-      rows,
-      $("clientFilter").value || "Все организации",
-      $("statusFilter").value || "Все статусы"
-    );
-  }
+    <section class="view active" id="monthView"></section>
+    <section class="view" id="dayView"></section>
+  </main>
 
-  function rowsForClientDebt(client){
-    return state.records.filter(r =>
-      r.client === client &&
-      r.status === "не оплачено"
-    );
-  }
+  <div class="overlay" id="overlay"></div>
 
-  function makeDebtPdf(client){
-    const rows = rowsForClientDebt(client);
-    if(!rows.length){
-      showToast("Нет неоплаченных работ");
-      return;
-    }
-    writePdfReport(rows, client, "Не оплачено", "Клиент");
-  }
+  <section class="sheet" id="entrySheet" aria-hidden="true">
+    <div class="sheet-head">
+      <h2 id="sheetTitle">Новая запись</h2>
+      <button class="icon-btn" id="closeSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <form id="entryForm">
+        <input type="hidden" id="entryId">
+        <input type="hidden" id="entryDate">
+        <input type="hidden" id="entryType" value="mobile">
+        <input type="hidden" id="entryDuration" value="60">
+        <input type="hidden" id="entryAllDay" value="false">
+        <input type="hidden" id="entryTime" value="10:00">
+        <input type="hidden" id="entryEndTime" value="11:00">
 
-  function markClientDebtPaid(client){
-    const rows = rowsForClientDebt(client);
-    if(!rows.length){
-      showToast("Нет неоплаченных работ");
-      return;
-    }
-    const sum = rows.reduce((s,r) => s + Number(r.price || 0), 0);
-    const ok = confirm(`Отметить как оплаченные работы на сумму ${money(sum)} для ${client}?`);
-    if(!ok) return;
-    const ids = new Set(rows.map(r => r.id));
-    state.records = state.records.map(r => ids.has(r.id) ? {...r, status:"оплачено"} : r);
-    renderAll();
-    showToast("Долг отмечен оплаченным");
-  }
+        <div class="field">
+          <label>Название записи</label>
+          <input id="titleInput" required placeholder="Завод BMW X6">
+        </div>
+        <div class="field">
+          <label>Тип записи</label>
+          <div class="type-grid">
+            <button type="button" class="active" data-type="mobile">Выезд</button>
+            <button type="button" data-type="base">На базе</button>
+            <button type="button" data-type="personal">Личный</button>
+          </div>
+        </div>
 
-  function downloadText(filename, content, type){
-    const blob = new Blob([content], {type});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }
+        <div class="field" id="timeField">
+          <label>Время записи</label>
+          <div class="time-wheel-wrap">
+            <div class="time-wheel-col">
+              <div class="time-wheel-title">Начало</div>
+              <div class="time-wheel" id="hourWheel"></div>
+            </div>
+            <div class="time-wheel-col">
+              <div class="time-wheel-title">Конец</div>
+              <div class="time-wheel" id="minuteWheel"></div>
+            </div>
+          </div>
+        </div>
 
-  function downloadBackup(){
-    const data = {
-      clients: state.clients,
-      extraElements: state.extraElements,
-      records: state.records
+        <div class="field">
+          <label>Комментарий</label>
+          <textarea id="commentInput" placeholder="Что важно помнить по записи"></textarea>
+        </div>
+
+        <div class="sheet-actions">
+          <button type="submit" class="primary" id="submitBtn">Добавить запись</button>
+          <button type="button" class="danger" id="deleteBtn" hidden>Удалить</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // state
+    const STORAGE_KEY = 'pdr-fast-calendar-v1';
+    const SETTINGS = { workStart: 9, workEnd: 19, stepMinutes: 30 };
+    const state = {
+      view: 'month',
+      selectedDate: startOfDay(new Date()),
+      entries: [],
+      editingId: null,
+      drag: null,
+      monthRangeStart: -1,
+      monthRangeEnd: 4,
+      currentVisibleMonth: monthStart(new Date()),
+      monthInitialized: false
     };
-    downloadText(`pdr-backup-${todayISO()}.json`, JSON.stringify(data, null, 2), "application/json;charset=utf-8");
-    showToast("Резервная копия скачана");
-  }
+    const labels = {
+      mobile: 'Выезд',
+      base: 'На базе',
+      personal: 'Личный'
+    };
 
-  function validateBackup(data){
-    return data &&
-      Array.isArray(data.clients) &&
-      Array.isArray(data.records) &&
-      (data.extraElements === undefined || Array.isArray(data.extraElements));
-  }
-
-  function importBackupFile(file){
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try{
-        const data = JSON.parse(reader.result);
-        if(!validateBackup(data)){
-          showToast("Неверный файл резервной копии");
-          return;
+    // storage
+    function loadEntries() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+          console.warn('Saved calendar data is corrupted, loading demo entries instead.', error);
+          localStorage.setItem(`${STORAGE_KEY}-broken-${Date.now()}`, raw);
         }
-        if(!confirm("Заменить текущую базу данными из резервной копии?")) return;
-        state = {
-          clients: data.clients.length ? data.clients : defaults.clients,
-          extraElements: Array.isArray(data.extraElements) ? data.extraElements : [],
-          records: data.records
-        };
-        selectedElements = [];
-        save();
-        renderAll();
-        showToast("База восстановлена");
-      }catch(e){
-        showToast("Не удалось прочитать файл");
       }
-    };
-    reader.readAsText(file, "utf-8");
-  }
-
-  function csvCell(value){
-    return `"${String(value ?? "").replace(/"/g, '""')}"`;
-  }
-
-  function exportCsv(){
-    const header = ["Дата","Клиент","Автомобиль","Элемент","Стоимость","Способ оплаты","Статус оплаты"];
-    const rows = state.records
-      .slice()
-      .sort((a,b) => (a.date || "").localeCompare(b.date || "") || a.id - b.id)
-      .map(r => [
-        r.date || "",
-        r.client || "",
-        r.car || "",
-        (r.elements || []).join(", "),
-        r.price || 0,
-        r.paymentMethod || "",
-        r.status || ""
-      ]);
-    const csv = [header, ...rows].map(row => row.map(csvCell).join(";")).join("\r\n");
-    downloadText(`pdr-records-${todayISO()}.csv`, "\ufeff" + csv, "text/csv;charset=utf-8");
-    showToast("CSV скачан");
-  }
-
-  function markFilteredUnpaidAsPaid(){
-    const rows = getFilteredRows().filter(r => r.status === "не оплачено");
-    if(!rows.length){
-      showToast("Нет неоплаченных заказов");
-      return;
+      const demo = demoEntries();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(demo));
+      return demo;
+    }
+    function saveEntries() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.entries));
+    }
+    function resetDemo() {
+      if (!confirm('Сбросить записи и вернуть демо?')) return;
+      state.entries = demoEntries();
+      saveEntries();
+      render();
     }
 
-    const sum = rows.reduce((s,r) => s + Number(r.price || 0), 0);
-    const ok = confirm(`Отметить как оплаченные ${rows.length} заказ(ов) на сумму ${money(sum)}?`);
-    if(!ok) return;
-
-    const ids = new Set(rows.map(r => r.id));
-    state.records = state.records.map(r => ids.has(r.id) ? {...r, status:"оплачено"} : r);
-    renderAll();
-    showToast("Статус изменен на оплачено");
-  }
-
-  $("makePdfBtn").addEventListener("click", makePdfReport);
-  $("markFilteredPaidBtn").addEventListener("click", markFilteredUnpaidAsPaid);
-
-  $("clearAllBtn").addEventListener("click", () => {
-    if(confirm("Точно удалить все записи? Список организаций останется.")){
-      state.records = [];
-      renderAll();
-      showToast("Записи очищены");
+    // date helpers
+    function startOfDay(date) {
+      const d = new Date(date);
+      d.setHours(0, 0, 0, 0);
+      return d;
     }
-  });
+    function toISODate(date) {
+      const d = startOfDay(date);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+    function parseISODate(value) {
+      const [y, m, d] = value.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function addDays(date, count) {
+      const d = new Date(date);
+      d.setDate(d.getDate() + count);
+      return startOfDay(d);
+    }
+    function addMonths(date, count) {
+      const d = new Date(date);
+      d.setMonth(d.getMonth() + count, 1);
+      return startOfDay(d);
+    }
+    function calendarRowStart(date) {
+      const d = startOfDay(date);
+      return addDays(d, -((d.getDay() + 6) % 7));
+    }
+    function monthStart(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+    function monthKey(date) {
+      const d = monthStart(date);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    }
+    function monthGridStart(date) {
+      return calendarRowStart(monthStart(date));
+    }
+    function timeToMinutes(time) {
+      const [h, m] = (time || '10:00').split(':').map(Number);
+      return h * 60 + m;
+    }
+    function minutesToTime(total) {
+      const safe = Math.max(0, Math.min(23 * 60 + 30, total));
+      return `${String(Math.floor(safe / 60)).padStart(2, '0')}:${String(safe % 60).padStart(2, '0')}`;
+    }
+    function addMinutes(time, delta) {
+      return minutesToTime(timeToMinutes(time) + delta);
+    }
+    function slotTimes() {
+      const out = [];
+      for (let min = SETTINGS.workStart * 60; min < SETTINGS.workEnd * 60; min += SETTINGS.stepMinutes) out.push(minutesToTime(min));
+      return out;
+    }
+    function wheelTimes() {
+      const out = [];
+      for (let min = SETTINGS.workStart * 60; min <= SETTINGS.workEnd * 60; min += 10) out.push(minutesToTime(min));
+      return out;
+    }
+    function formatPeriod() {
+      if (state.view === 'month') return state.currentVisibleMonth.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+      return state.selectedDate.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+    }
+    function cap(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+    function uid() {
+      return 'entry-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    }
+    function escapeHTML(value) {
+      return String(value || '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[ch]));
+    }
+    function entriesForDate(date) {
+      const iso = toISODate(date);
+      return state.entries.filter(e => e.date === iso).sort((a, b) => Number(b.allDay) - Number(a.allDay) || timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
+    }
+    function entryById(id) {
+      return state.entries.find(e => e.id === id);
+    }
+    function entryEndTime(entry) {
+      return entry.endTime || addMinutes(entry.startTime || '10:00', entry.durationMinutes || 60);
+    }
+    function durationBetween(startTime, endTime) {
+      return Math.max(10, timeToMinutes(endTime) - timeToMinutes(startTime));
+    }
 
-  renderAll();
-})();
-</script>
+    // render
+    function render() {
+      syncTopbarHeight();
+      periodTitle.textContent = cap(formatPeriod());
+      periodSub.textContent = '';
+      document.querySelectorAll('[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === state.view));
+      document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+      document.getElementById(state.view + 'View').classList.add('active');
+      if (state.view === 'month') renderMonth();
+      if (state.view === 'day') renderDay();
+    }
+    function syncTopbarHeight() {
+      const height = document.querySelector('.topbar')?.offsetHeight || 118;
+      document.documentElement.style.setProperty('--topbar-height', `${height}px`);
+    }
 
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
-}
-</script>
+    // render month
+    function renderMonth() {
+      const anchor = monthStart(state.selectedDate);
+      const months = [];
+      for (let offset = state.monthRangeStart; offset <= state.monthRangeEnd; offset++) months.push(addMonths(anchor, offset));
+      const names = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      monthView.innerHTML = `
+        <div class="month-weekdays">${names.map(n => `<div>${n}</div>`).join('')}</div>
+        <div class="month-grid">${months.map(monthSection).join('')}</div>
+      `;
+      bindDragAndDrop();
+      window.removeEventListener('scroll', handleMonthScroll);
+      window.addEventListener('scroll', handleMonthScroll, { passive: true });
+      updateVisibleMonth();
+      if (!state.monthInitialized) {
+        state.monthInitialized = true;
+        setTimeout(() => scrollToMonth(monthStart(state.selectedDate), 'auto'), 0);
+      }
+    }
+    function monthSection(month) {
+      const start = monthGridStart(month);
+      const days = Array.from({ length: 42 }, (_, i) => addDays(start, i));
+      const weeks = Array.from({ length: 6 }, (_, i) => days.slice(i * 7, i * 7 + 7))
+        .filter(week => week.some(day => day.getMonth() === month.getMonth()));
+      return `
+        <section class="month-section" data-month="${monthKey(month)}">
+          <div class="month-divider">${cap(month.toLocaleDateString('ru-RU', { month: 'long' }))}</div>
+          ${weeks.map(week => `<div class="month-week">${week.map(day => monthCell(day, month)).join('')}</div>`).join('')}
+        </section>
+      `;
+    }
+    function monthCell(day, ownerMonth = state.selectedDate) {
+      const outside = day.getMonth() !== ownerMonth.getMonth();
+      if (outside) {
+        return `
+          <div class="month-day ghost-cell outside">
+            <div class="day-num"><span class="day-num-inner">${day.getDate()}</span></div>
+            <div class="day-items"></div>
+          </div>
+        `;
+      }
+      const list = entriesForDate(day);
+      const visible = list.slice(0, 3);
+      const today = toISODate(day) === toISODate(new Date());
+      const selected = toISODate(day) === toISODate(state.selectedDate);
+      return `
+        <div class="month-day ${today ? 'today' : ''} ${selected ? 'selected' : ''}" data-date="${toISODate(day)}">
+          <div class="day-num"><span class="day-num-inner ${today ? 'today' : ''}">${day.getDate()}</span></div>
+          <div class="day-items">
+            ${visible.map(entryChip).join('')}
+            ${list.length > 3 ? `<div class="more">+${list.length - 3} ещё</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+    function entryChip(entry) {
+      return `
+        <div class="entry-chip ${entry.type} ${entry.allDay ? 'all-day' : ''}" data-id="${entry.id}">
+          <div class="entry-title" lang="ru">${escapeHTML(entry.title)}</div>
+          <div class="entry-time">${escapeHTML(entry.startTime || '10:00')}</div>
+        </div>
+      `;
+    }
+    function handleMonthScroll() {
+      if (state.view !== 'month') return;
+      const scrollY = window.scrollY;
+      const doc = document.documentElement;
+      if (scrollY + window.innerHeight > doc.scrollHeight - 700) {
+        state.monthRangeEnd += 3;
+        renderMonthPreserveScroll();
+      } else if (scrollY < 500) {
+        const before = doc.scrollHeight;
+        state.monthRangeStart -= 3;
+        renderMonthPreserveScroll(before);
+      } else {
+        updateVisibleMonth();
+      }
+    }
+    function renderMonthPreserveScroll(previousHeight) {
+      const beforeTop = window.scrollY;
+      renderMonth();
+      if (previousHeight) window.scrollTo(0, beforeTop + (document.documentElement.scrollHeight - previousHeight));
+      else window.scrollTo(0, beforeTop);
+      updateVisibleMonth();
+    }
+    function updateVisibleMonth() {
+      if (state.view !== 'month') return;
+      const sections = [...document.querySelectorAll('.month-section')];
+      if (!sections.length) return;
+      const targetY = document.querySelector('.topbar').getBoundingClientRect().bottom + 16;
+      let best = sections[0];
+      let bestDistance = Infinity;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - targetY);
+        if (rect.bottom > targetY && distance < bestDistance) {
+          best = section;
+          bestDistance = distance;
+        }
+      });
+      const [year, month] = best.dataset.month.split('-').map(Number);
+      const visible = new Date(year, month - 1, 1);
+      if (monthKey(visible) !== monthKey(state.currentVisibleMonth)) {
+        state.currentVisibleMonth = visible;
+        periodTitle.textContent = cap(formatPeriod());
+      }
+    }
+    function scrollToMonth(month, behavior = 'smooth') {
+      if (state.view !== 'month') return;
+      const key = monthKey(month);
+      let section = document.querySelector(`.month-section[data-month="${key}"]`);
+      if (!section) {
+        const anchor = monthStart(state.selectedDate);
+        const diff = (month.getFullYear() - anchor.getFullYear()) * 12 + month.getMonth() - anchor.getMonth();
+        state.monthRangeStart = Math.min(state.monthRangeStart, diff - 1);
+        state.monthRangeEnd = Math.max(state.monthRangeEnd, diff + 1);
+        renderMonth();
+        section = document.querySelector(`.month-section[data-month="${key}"]`);
+      }
+      section?.scrollIntoView({ behavior, block: 'start' });
+      state.currentVisibleMonth = monthStart(month);
+      periodTitle.textContent = cap(formatPeriod());
+    }
+
+    // render day
+    function renderDay() {
+      const allDay = entriesForDate(state.selectedDate).filter(e => e.allDay);
+      const timed = entriesForDate(state.selectedDate).filter(e => !e.allDay);
+      const allDayHtml = allDay.length ? `<div class="all-day-row">${allDay.map(e => `<div class="all-day-card ${e.type}" data-id="${e.id}"><span>${escapeHTML(e.title)}</span><small>${escapeHTML(e.startTime || '10:00')}</small></div>`).join('')}</div>` : '';
+      const slots = slotTimes().map((time, row) => `
+        <div class="time-cell" style="grid-row:${row + 1};grid-column:1">${time}</div>
+        <div class="grid-cell" data-date="${toISODate(state.selectedDate)}" data-time="${time}" style="grid-row:${row + 1};grid-column:2"></div>
+      `).join('');
+      dayView.innerHTML = allDayHtml + `<div class="schedule">${slots}${timed.map(timeCard).join('')}</div>`;
+      bindDragAndDrop();
+    }
+    function timeCard(entry) {
+      const slotHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--slot-height'));
+      const startOffset = Math.max(0, timeToMinutes(entry.startTime) - SETTINGS.workStart * 60);
+      const top = startOffset / SETTINGS.stepMinutes * slotHeight + 4;
+      const endTime = entryEndTime(entry);
+      const durationMinutes = durationBetween(entry.startTime, endTime);
+      const height = Math.max(48, durationMinutes / SETTINGS.stepMinutes * slotHeight - 8);
+      const comment = entry.comment ? `<div class="meta">${escapeHTML(entry.comment)}</div>` : '';
+      return `
+        <article class="time-card ${entry.type}" data-id="${entry.id}" style="top:${top}px;height:${height}px">
+          <div class="time">${entry.startTime}–${endTime}</div>
+          <div class="name">${escapeHTML(entry.title)}</div>
+          ${comment}
+        </article>
+      `;
+    }
+
+    // event actions
+    function defaultEntry(dateValue = toISODate(state.selectedDate), timeValue = '10:00') {
+      return {
+        id: '',
+        title: '',
+        type: 'mobile',
+        date: dateValue,
+        startTime: timeValue,
+        endTime: addMinutes(timeValue, 60),
+        durationMinutes: 60,
+        allDay: false,
+        comment: ''
+      };
+    }
+    function setType(type) {
+      entryType.value = type;
+      document.querySelectorAll('[data-type]').forEach(btn => btn.classList.toggle('active', btn.dataset.type === type));
+    }
+    function setTime(startValue, endValue = addMinutes(startValue, 60)) {
+      const startTime = normalizeStartTime(startValue);
+      const endTime = normalizeEndTime(startTime, endValue);
+      entryTime.value = startTime;
+      entryEndTime.value = endTime;
+      entryDuration.value = String(durationBetween(startTime, endTime));
+      entryAllDay.value = 'false';
+      renderTimeWheels(startTime, endTime);
+    }
+    function normalizeWorkTime(value = '10:00') {
+      let [hour, minute] = value.split(':').map(Number);
+      hour = Math.max(9, Math.min(19, Number.isFinite(hour) ? hour : 10));
+      minute = Math.round((Number.isFinite(minute) ? minute : 0) / 10) * 10;
+      if (minute >= 60) {
+        minute = 0;
+        hour = Math.min(19, hour + 1);
+      }
+      return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+    }
+    function normalizeStartTime(value = '10:00') {
+      const latestStart = SETTINGS.workEnd * 60 - 10;
+      return minutesToTime(Math.min(timeToMinutes(normalizeWorkTime(value)), latestStart));
+    }
+    function normalizeEndTime(startTime, value = addMinutes(startTime, 60)) {
+      let endTime = normalizeWorkTime(value);
+      if (timeToMinutes(endTime) <= timeToMinutes(startTime)) endTime = addMinutes(startTime, 60);
+      if (timeToMinutes(endTime) > SETTINGS.workEnd * 60) endTime = minutesToTime(SETTINGS.workEnd * 60);
+      if (timeToMinutes(endTime) <= timeToMinutes(startTime)) endTime = addMinutes(startTime, 10);
+      return endTime;
+    }
+    function renderTimeWheels(startValue = entryTime.value || '10:00', endValue = entryEndTime.value || '11:00') {
+      const activeStart = normalizeStartTime(startValue);
+      const activeEnd = normalizeEndTime(activeStart, endValue);
+      const times = wheelTimes();
+      const startTimes = times.filter(time => timeToMinutes(time) < SETTINGS.workEnd * 60);
+      hourWheel.innerHTML = `<div class="time-option spacer"></div>${startTimes.map(time => `<div class="time-option ${time === activeStart ? 'active' : ''}" data-wheel-start="${time}">${time}</div>`).join('')}<div class="time-option spacer"></div>`;
+      minuteWheel.innerHTML = `<div class="time-option spacer"></div>${times.map(time => `<div class="time-option ${time === activeEnd ? 'active' : ''}" data-wheel-end="${time}">${time}</div>`).join('')}<div class="time-option spacer"></div>`;
+      requestAnimationFrame(() => {
+        hourWheel.querySelector('.time-option.active')?.scrollIntoView({ block: 'center' });
+        minuteWheel.querySelector('.time-option.active')?.scrollIntoView({ block: 'center' });
+      });
+    }
+    function updateTimeFromWheels() {
+      const startTime = normalizeStartTime(activeWheelValue(hourWheel, 'wheelStart') || entryTime.value || '10:00');
+      const rawEndTime = activeWheelValue(minuteWheel, 'wheelEnd') || entryEndTime.value || addMinutes(startTime, 60);
+      const endTime = normalizeEndTime(startTime, rawEndTime);
+      entryTime.value = startTime;
+      entryEndTime.value = endTime;
+      entryDuration.value = String(durationBetween(startTime, endTime));
+      if (endTime !== rawEndTime) renderTimeWheels(startTime, endTime);
+    }
+    function activeWheelValue(wheel, key) {
+      const wheelRect = wheel.getBoundingClientRect();
+      const center = wheelRect.top + wheelRect.height / 2;
+      let best = null;
+      let distance = Infinity;
+      wheel.querySelectorAll(`[data-${key.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}]`).forEach(option => {
+        const rect = option.getBoundingClientRect();
+        const optionCenter = rect.top + rect.height / 2;
+        const currentDistance = Math.abs(optionCenter - center);
+        if (currentDistance < distance) {
+          distance = currentDistance;
+          best = option;
+        }
+      });
+      if (!best) return '';
+      wheel.querySelectorAll('.time-option').forEach(option => option.classList.toggle('active', option === best));
+      return best.dataset[key];
+    }
+    function openSheetForNew(dateValue, timeValue = '10:00') {
+      openEditor(defaultEntry(dateValue, timeValue));
+    }
+    function openEditor(entry) {
+      const isEdit = Boolean(entry.id);
+      state.editingId = entry.id || null;
+      entryForm.reset();
+      sheetTitle.textContent = isEdit ? 'Редактировать' : 'Новая запись';
+      submitBtn.textContent = isEdit ? 'Сохранить' : 'Добавить запись';
+      deleteBtn.hidden = !isEdit;
+      entryId.value = entry.id || '';
+      entryDate.value = entry.date;
+      titleInput.value = entry.title || '';
+      commentInput.value = entry.comment || '';
+      setType(entry.type || 'mobile');
+      setTime(entry.startTime || '10:00', entryEndTime(entry));
+      overlay.classList.add('open');
+      entrySheet.classList.add('open');
+    }
+    function closeBottomSheet() {
+      overlay.classList.remove('open');
+      entrySheet.classList.remove('open');
+      state.editingId = null;
+    }
+    function saveEntryFromForm() {
+      const now = new Date().toISOString();
+      const data = {
+        id: entryId.value,
+        title: titleInput.value.trim(),
+        type: entryType.value,
+        date: entryDate.value,
+        startTime: entryTime.value,
+        endTime: entryEndTime.value,
+        durationMinutes: durationBetween(entryTime.value, entryEndTime.value),
+        allDay: false,
+        comment: commentInput.value.trim()
+      };
+      if (data.id) {
+        state.entries = state.entries.map(entry => entry.id === data.id ? { ...entry, ...data, updatedAt: now } : entry);
+      } else {
+        state.entries.push({ ...data, id: uid(), createdAt: now, updatedAt: now });
+      }
+      saveEntries();
+      closeBottomSheet();
+      render();
+    }
+    function deleteEntry() {
+      if (!state.editingId || !confirm('Удалить запись?')) return;
+      state.entries = state.entries.filter(entry => entry.id !== state.editingId);
+      saveEntries();
+      closeBottomSheet();
+      render();
+    }
+    function moveEntry(id, dateValue, timeValue) {
+      const entry = entryById(id);
+      if (!entry) return;
+      const duration = durationBetween(entry.startTime || '10:00', entryEndTime(entry));
+      const nextStartTime = timeValue || entry.startTime;
+      state.entries = state.entries.map(item => item.id === id ? {
+        ...item,
+        date: dateValue,
+        startTime: nextStartTime,
+        endTime: timeValue ? normalizeEndTime(nextStartTime, addMinutes(nextStartTime, duration)) : entryEndTime(item),
+        durationMinutes: duration,
+        updatedAt: new Date().toISOString()
+      } : item);
+      state.selectedDate = parseISODate(dateValue);
+      saveEntries();
+      render();
+    }
+
+    // drag and drop
+    function bindDragAndDrop() {
+      document.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', event => {
+          if (state.drag?.moved) return;
+          event.stopPropagation();
+          const entry = entryById(el.dataset.id);
+          if (entry) openEditor(entry);
+        });
+        el.addEventListener('pointerdown', startPointerDrag);
+      });
+    }
+    function startPointerDrag(event) {
+      if (event.button && event.button !== 0) return;
+      const source = event.currentTarget;
+      state.drag = {
+        id: source.dataset.id,
+        source,
+        pointerId: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        moved: false,
+        active: event.pointerType !== 'touch',
+        ghost: null,
+        target: null,
+        timer: null
+      };
+      source.setPointerCapture?.(event.pointerId);
+      source.addEventListener('pointermove', pointerMove);
+      source.addEventListener('pointerup', pointerEnd, { once: true });
+      source.addEventListener('pointercancel', pointerEnd, { once: true });
+      if (event.pointerType === 'touch') {
+        state.drag.timer = setTimeout(() => {
+          if (!state.drag) return;
+          state.drag.active = true;
+          state.drag.moved = true;
+          state.drag.source.classList.add('dragging');
+          if (!state.drag.ghost) state.drag.ghost = createDragGhost(state.drag.id);
+          positionDragGhost(state.drag.x, state.drag.y);
+          updateDropTarget(state.drag.x, state.drag.y);
+        }, 280);
+      }
+    }
+    function pointerMove(event) {
+      if (!state.drag) return;
+      const dx = event.clientX - state.drag.x;
+      const dy = event.clientY - state.drag.y;
+      const distance = Math.abs(dx) + Math.abs(dy);
+      if (!state.drag.active && distance > 12) {
+        clearTimeout(state.drag.timer);
+        state.drag.timer = null;
+        return;
+      }
+      if (state.drag.active && distance > 6) {
+        event.preventDefault();
+        state.drag.moved = true;
+        state.drag.source.classList.add('dragging');
+        if (!state.drag.ghost) state.drag.ghost = createDragGhost(state.drag.id);
+        positionDragGhost(event.clientX, event.clientY);
+        updateDropTarget(event.clientX, event.clientY);
+      }
+    }
+    function pointerEnd(event) {
+      const drag = state.drag;
+      if (!drag) return;
+      clearTimeout(drag.timer);
+      drag.source.classList.remove('dragging');
+      drag.source.removeEventListener('pointermove', pointerMove);
+      const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.month-day, .grid-cell');
+      if (drag.moved && drag.active && target?.dataset.date) moveEntry(drag.id, target.dataset.date, target.dataset.time);
+      clearDropTarget();
+      drag.ghost?.remove();
+      setTimeout(() => { state.drag = null; }, 250);
+    }
+    function createDragGhost(id) {
+      const entry = entryById(id);
+      const ghost = document.createElement('div');
+      ghost.className = `drag-ghost ${entry.type} ${entry.allDay ? 'all-day' : ''}`;
+      ghost.innerHTML = `
+        <div class="drag-ghost-title">${escapeHTML(entry.title)}</div>
+        ${entry.allDay ? '' : `<div class="drag-ghost-time">${escapeHTML(entry.startTime)}</div>`}
+      `;
+      document.body.appendChild(ghost);
+      return ghost;
+    }
+    function positionDragGhost(x, y) {
+      if (!state.drag?.ghost) return;
+      state.drag.ghost.style.left = `${x}px`;
+      state.drag.ghost.style.top = `${y}px`;
+    }
+    function updateDropTarget(x, y) {
+      const target = document.elementFromPoint(x, y)?.closest('.month-day, .grid-cell');
+      if (target === state.drag.target) return;
+      clearDropTarget();
+      if (target?.dataset.date) {
+        target.classList.add('drop-target');
+        state.drag.target = target;
+      }
+    }
+    function clearDropTarget() {
+      document.querySelectorAll('.drop-target').forEach(el => el.classList.remove('drop-target'));
+      if (state.drag) state.drag.target = null;
+    }
+
+    // bottom sheet
+    entryForm.addEventListener('submit', event => {
+      event.preventDefault();
+      saveEntryFromForm();
+    });
+    closeSheet.addEventListener('click', closeBottomSheet);
+    overlay.addEventListener('click', closeBottomSheet);
+    deleteBtn.addEventListener('click', deleteEntry);
+    document.querySelectorAll('[data-type]').forEach(btn => btn.addEventListener('click', () => setType(btn.dataset.type)));
+    const wheelTimers = new WeakMap();
+    [hourWheel, minuteWheel].forEach(wheel => {
+      wheel.addEventListener('scroll', () => {
+        updateTimeFromWheels();
+        clearTimeout(wheelTimers.get(wheel));
+        wheelTimers.set(wheel, setTimeout(() => {
+          const active = wheel.querySelector('.time-option.active');
+          active?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 120));
+      }, { passive: true });
+    });
+    // UI handlers
+    document.querySelectorAll('[data-view]').forEach(btn => btn.addEventListener('click', () => {
+      state.view = btn.dataset.view;
+      render();
+      if (state.view === 'month') setTimeout(() => scrollToMonth(monthStart(new Date()), 'auto'), 0);
+      if (state.view === 'day') setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
+    }));
+    prevBtn.addEventListener('click', () => {
+      if (state.view === 'month') scrollToMonth(addMonths(state.currentVisibleMonth, -1));
+      else {
+        state.selectedDate = addDays(state.selectedDate, -1);
+        render();
+      }
+    });
+    nextBtn.addEventListener('click', () => {
+      if (state.view === 'month') scrollToMonth(addMonths(state.currentVisibleMonth, 1));
+      else {
+        state.selectedDate = addDays(state.selectedDate, 1);
+        render();
+      }
+    });
+    resetBtn.addEventListener('click', resetDemo);
+    window.addEventListener('resize', syncTopbarHeight);
+    monthView.addEventListener('click', event => {
+      if (state.drag?.moved) return;
+      const day = event.target.closest('.month-day');
+      if (!day || event.target.closest('[data-id]')) return;
+      openSheetForNew(day.dataset.date, '10:00');
+    });
+    dayView.addEventListener('click', event => {
+      if (state.drag?.moved) return;
+      const slot = event.target.closest('.grid-cell');
+      if (!slot || event.target.closest('[data-id]')) return;
+      openSheetForNew(slot.dataset.date, slot.dataset.time);
+    });
+
+    // demo data
+    function demoEntries() {
+      const today = startOfDay(new Date());
+      const tomorrow = addDays(today, 1);
+      const plusTwo = addDays(today, 2);
+      const plusThree = addDays(today, 3);
+      const now = new Date().toISOString();
+      return [
+        { id: uid(), title: 'Завод BMW X6', type: 'mobile', date: toISODate(today), startTime: '17:00', endTime: '18:00', durationMinutes: 60, allDay: false, comment: 'Осмотреть переднее крыло.', createdAt: now, updatedAt: now },
+        { id: uid(), title: 'На базе Camry', type: 'base', date: toISODate(tomorrow), startTime: '12:00', endTime: '14:00', durationMinutes: 120, allDay: false, comment: '', createdAt: now, updatedAt: now },
+        { id: uid(), title: 'Стрижка', type: 'personal', date: toISODate(plusTwo), startTime: '14:30', endTime: '15:30', durationMinutes: 60, allDay: false, comment: '', createdAt: now, updatedAt: now },
+        { id: uid(), title: 'Выходной', type: 'personal', date: toISODate(plusThree), startTime: '10:00', endTime: '11:00', durationMinutes: 60, allDay: false, comment: '', createdAt: now, updatedAt: now }
+      ];
+    }
+
+    state.entries = loadEntries();
+    render();
+  </script>
+
+  <script>
+    let deferredInstallPrompt = null;
+    const installButton = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      installButton?.classList.add('show');
+    });
+
+    installButton?.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      installButton.classList.remove('show');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      installButton?.classList.remove('show');
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => reg.update())
+          .catch(err => console.warn('Service worker registration failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>
